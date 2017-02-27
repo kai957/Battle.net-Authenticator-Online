@@ -322,11 +322,11 @@ class Authenticator {
             'Content-Type: application/octet-stream',
             'Connection: close'
         );
-        $proxyUrl = array("", "http://182.84.98.104:808", "http://120.210.207.82:808");
-        $proxy = $proxyUrl[rand(0, 2)];
+        //$proxyUrl = array();
+        $proxy = "";//$proxyUrl[rand(0, 2)];
         if (strlen($proxy) > 6) {
             curl_setopt($ch, CURLOPT_PROXY, $proxy);
-            curl_setopt($ch, CURLOPT_PROXYUSERPWD, "cc0707:cc0707");
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, "fuckyou:fuckyou");
         }
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_URL, $url);

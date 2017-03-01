@@ -18,10 +18,10 @@ if ($logincheck == 0) {
     $user_donated = $rowtemp['user_donated'];
     if ($user_donated > 0) {
         define("USER_DONATED", TRUE);
-    }else{
-								define("USER_DONATED", FALSE);
-							}
-                            
+    } else {
+        define("USER_DONATED", FALSE);
+    }
+
     $sql = "SELECT * FROM `authdata` WHERE `user_id`='$user_id'";
     if ((!USER_DONATED && queryNum_rows($sql) < MOST_AUTH) || (USER_DONATED && queryNum_rows($sql) < MOST_AUTH_DONATED)) {
         try {

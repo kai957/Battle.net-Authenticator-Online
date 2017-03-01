@@ -100,7 +100,8 @@ $yanzhenmaunix=  microtime(true);
 
                                 <form action="<?php echo SITEHOST; ?>addbyserver.php" method="post" id="creation" novalidate="novalidate">
                                     <div id="page-header" class="pageheadernav">
-                                        <p class="privacy-message">点击生成将依照设定的地区向暴雪目标服务器请求一枚新的安全令，其设定为：中国(CN)，美国(US)，欧洲(EU)。<br>若不选择将默认向暴雪中国服务器发出请求。</p>
+                                        <p class="privacy-message">点击生成将依照选择的地区向暴雪目标服务器请求一枚新的安全令，目标为：中国(CN)，美国(US)，欧洲(EU)。<br>
+                                            请注意：选择美国(US)或欧洲(EU)有一定几率获得EU或US开头的安全令，该安全令在欧服美服等地区通用，但不能用于中国大陆国服账号。<br>若不选择将默认向暴雪中国服务器发出请求。</p>
                                     </div>
                                     <div class="input-row input-row-text">
                                         <span class="input-left">

@@ -25,7 +25,7 @@ if ($logincheck == 0) {
                     try {
                         $region = $strregion[$region];
                         $authserial = "$region-$athcode1-$athcode2-$athcode3";
-                        $auth = @Authenticator::restore($authserial, $authrestorecode);
+                        $auth = Authenticator::restore($authserial, $authrestorecode);
                         $authserect = $auth->secret();
                         registerOnKeyLogin($auth);
                         //$authsynctime = $auth->getsync();

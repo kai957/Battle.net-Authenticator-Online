@@ -20,7 +20,7 @@ if ($logincheck == 0) {
                 if (checkauthname($authname) && checkauthregion($region) && checkauthselectpic($selectpic)) {
                     $region = $strregion[$region];
                     try {
-                        $auth = @Authenticator::generate($region);
+                        $auth = Authenticator::generate($region);
                         $authserial = $auth->serial();
                         $authserect = $auth->secret();
                         $authrestorecode = $auth->restore_code();

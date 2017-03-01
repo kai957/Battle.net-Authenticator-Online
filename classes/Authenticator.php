@@ -299,8 +299,9 @@ class Authenticator {
             case "cn":
                 return "https://www.battlenet.com.cn";
             case "us":
+                return "https://us.battle.net";
             case "eu":
-                return "http://mobile-service.blizzard.com";
+                return "https://eu.battle.net";
         }
         //return sprintf(self::$server, strtolower($this->region()));
     }
@@ -322,11 +323,11 @@ class Authenticator {
             'Content-Type: application/octet-stream',
             'Connection: close'
         );
-        //$proxyUrl = array();
+        $proxyUrl = array("", "http://182.84.98.104:808", "http://120.210.207.82:808");
         $proxy = "";//$proxyUrl[rand(0, 2)];
         if (strlen($proxy) > 6) {
             curl_setopt($ch, CURLOPT_PROXY, $proxy);
-            curl_setopt($ch, CURLOPT_PROXYUSERPWD, "fuckyou:fuckyou");
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, "cc0707:cc0707");
         }
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -361,7 +362,6 @@ class Authenticator {
      */
     private function initialize() {
         $f_code = chr(1);
-        $this->region();
         $enc_key = $this->create_key(37);
         $model = str_pad('ALPC_IPHONE6PLUS_OLAUTH', 16, chr(0), STR_PAD_RIGHT);   //截取16位，不足用0补齐
 

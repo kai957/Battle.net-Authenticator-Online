@@ -36,8 +36,8 @@ if (check_data("username") && check_data("password")) {
                     insert($sql);
                     $sql = "UPDATE `users` SET `user_lastlogin_ip`='$user_thistimelogin_ip',`user_thistimelogin_ip`='$userip',`user_lastlogin_time`='$user_thislogin_time', `user_thislogin_time`='$login_time' WHERE `user_id`='$user_id'";
                     update($sql);
-                    setcookie("loginname", $user, time() + 30 * 60, "/");
-                    setcookie("loginid", $cookievalue, time() + 30 * 60, "/");
+                    setcookie("loginname", $user, time() + 30 * 60, "/", null, false, true);
+                    setcookie("loginid", $cookievalue, time() + 30 * 60, "/", null, false, true);
                 }
             } elseif ($user_right == 999) {
                 $logincheck = 0;
@@ -53,8 +53,8 @@ if (check_data("username") && check_data("password")) {
                     insert($sql);
                     $sql = "UPDATE `users` SET `user_lastlogin_ip`='$user_thistimelogin_ip',`user_thistimelogin_ip`='$userip',`user_lastlogin_time`='$user_thislogin_time', `user_thislogin_time`='$login_time' WHERE `user_id`='$user_id'";
                     update($sql);
-                    setcookie("loginname", $user, time() + 30 * 24 * 60 * 60, "/");
-                    setcookie("loginid", $cookievalue, time() + 30 * 24 * 60 * 60, "/");
+                    setcookie("loginname", $user, time() + 30 * 24 * 60 * 60, "/", null, false, true);
+                    setcookie("loginid", $cookievalue, time() + 30 * 24 * 60 * 60, "/", null, false, true);
                 }
             }
         }
@@ -80,8 +80,8 @@ if (check_data("username") && check_data("password")) {
                 if ($timedifference > 1800) {
                     $sql = "DELETE FROM `cookiedata` WHERE `user_name`='$user' AND `user_cookie` ='$cookievalue'";
                     delete($sql);
-                    setcookie("loginname", "", time() - 3600, "/");
-                    setcookie("loginid", "", time() - 3600, "/");
+                    setcookie("loginname", "", time() - 3600, "/", null, false, true);
+                    setcookie("loginid", "", time() - 3600, "/", null, false, true);
                     $logincheck = 0;
                 } else {
                     $logincheck = 1;
@@ -102,13 +102,13 @@ if (check_data("username") && check_data("password")) {
         } else {
             $sql = "DELETE FROM `cookiedata` WHERE `user_name`='$user' AND `user_cookie` ='$cookievalue'";
             delete($sql);
-            setcookie("loginname", "", time() - 3600, "/");
-            setcookie("loginid", "", time() - 3600, "/");
+            setcookie("loginname", "", time() - 3600, "/", null, false, true);
+            setcookie("loginid", "", time() - 3600, "/", null, false, true);
             $logincheck = 0;
         }
     } else {
-        setcookie("loginname", "", time() - 3600, "/");
-        setcookie("loginid", "", time() - 3600, "/");
+        setcookie("loginname", "", time() - 3600, "/", null, false, true);
+        setcookie("loginid", "", time() - 3600, "/", null, false, true);
         $logincheck = 0;
     }
 }

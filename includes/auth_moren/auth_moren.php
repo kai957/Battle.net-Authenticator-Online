@@ -31,8 +31,8 @@ if (isset($_SESSION['loginuser']) && !empty($_SESSION['loginuser'])) {
                 if ($timedifference > 1800) {
                     $sql = "DELETE FROM `cookiedata` WHERE `user_name`='$user' AND `user_cookie` ='$cookievalue'";
                     delete($sql);
-                    setcookie("loginname", "", time() - 3600, "/");
-                    setcookie("loginid", "", time() - 3600, "/");
+                    setcookie("loginname", "", time() - 3600, "/", null, false, true);
+                    setcookie("loginid", "", time() - 3600, "/", null, false, true);
                     $logincheck = 0;
                 } else {
                     $logincheck = 1;
@@ -53,8 +53,8 @@ if (isset($_SESSION['loginuser']) && !empty($_SESSION['loginuser'])) {
         } else {
             $sql = "DELETE FROM `cookiedata` WHERE `user_name`='$usertmp' AND `user_cookie` ='$cookievalue'";
             delete($sql);
-            setcookie("loginname", "", time() - 3600, "/");
-            setcookie("loginid", "", time() - 3600, "/");
+            setcookie("loginname", "", time() - 3600, "/", null, false, true);
+            setcookie("loginid", "", time() - 3600, "/", null, false, true);
             $logincheck = 0;
         }
     }

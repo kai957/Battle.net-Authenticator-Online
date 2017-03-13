@@ -52,9 +52,9 @@ function create_donate_table() {
         <link rel="shortcut icon" type="image/x-icon" href="resources/img/favicon.ico"> 
         <?php
         if (SSLMODE == 1) {
-            echo '<script type="text/javascript" src="https://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js"></script>';
+            echo '<script type="text/javascript" src="https://lib.sinaapp.com/js/jquery/2.0.3/jquery-2.0.3.min.js"></script>';
         } else {
-            echo '<script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js"></script>';
+            echo '<script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/2.0.3/jquery-2.0.3.min.js"></script>';
         }
         ?>
         <script>

@@ -35,8 +35,8 @@ defined("ZHANGXUAN") or die("no hacker.");
                                     if ($timedifference > 1800) {
                                         $sql = "DELETE FROM `cookiedata` WHERE `user_name`='$user' AND `user_cookie` ='$cookievalue'";
                                         delete($sql);
-                                        setcookie("loginname", "", time() - 3600, "/");
-                                        setcookie("loginid", "", time() - 3600, "/");
+                                        setcookie("loginname", "", time() - 3600, "/", null, false, true);
+                                        setcookie("loginid", "", time() - 3600, "/", null, false, true);
                                         $logincheck = 0;
                                         echo "<a href='login.php' onclick='return Login.open()'>登入</a> 或 <a href='" . SITEHOST . "register.php'>注册一个账号</a></li><li class='top-core top-data'><a href='" . SITEHOST . "faq.php'>FAQ</a></li><li class='top-core top-data'><a href='" . SITEHOST . "account.php'>账号管理</a></li><li class='top-core top-final'><a href='" . SITEHOST . "donate.php'>捐赠</a>";
                                     } else {
@@ -60,13 +60,13 @@ defined("ZHANGXUAN") or die("no hacker.");
                             } else {
                                 $sql = "DELETE FROM `cookiedata` WHERE `user_name`='$user' AND `user_cookie` ='$cookievalue'";
                                 delete($sql);
-                                setcookie("loginname", "", time() - 3600, "/");
-                                setcookie("loginid", "", time() - 3600, "/");
+                                setcookie("loginname", "", time() - 3600, "/", null, false, true);
+                                setcookie("loginid", "", time() - 3600, "/", null, false, true);
                                 echo "<a href='login.php' onclick='return Login.open()'>登入</a> 或 <a href='" . SITEHOST . "register.php'>注册一个账号</a></li><li class='top-core top-data'><a href='" . SITEHOST . "faq.php'>FAQ</a></li><li class='top-core top-data'><a href='" . SITEHOST . "account.php'>账号管理</a></li><li class='top-core top-final'><a href='" . SITEHOST . "donate.php'>捐赠</a>";
                             }
                         } else {
-                            setcookie("loginname", "", time() - 3600, "/");
-                            setcookie("loginid", "", time() - 3600, "/");
+                            setcookie("loginname", "", time() - 3600, "/", null, false, true);
+                            setcookie("loginid", "", time() - 3600, "/", null, false, true);
                             echo "<a href='login.php' onclick='return Login.open()'>登入</a> 或 <a href='" . SITEHOST . "register.php'>注册一个账号</a></li><li class='top-core top-data'><a href='" . SITEHOST . "faq.php'>FAQ</a></li><li class='top-core top-data'><a href='" . SITEHOST . "account.php'>账号管理</a></li><li class='top-core top-final'><a href='" . SITEHOST . "donate.php'>捐赠</a>";
                         }
                     } else {

@@ -47,8 +47,8 @@ if (check_data("letters_code") && md5(strtolower($_POST["letters_code"])) == $_S
                         if ($rowtemp) {
                             if ($lowrightnum == 0)
                                 $_SESSION['loginuser'] = $user;
-                            setcookie("loginname", $user, time() + 30 * 24 * 60 * 60, "/");
-                            setcookie("loginid", $cookievalue, time() + 30 * 24 * 60 * 60, "/");
+                            setcookie("loginname", $user, time() + 30 * 24 * 60 * 60, "/", null, false, true);
+                            setcookie("loginid", $cookievalue, time() + 30 * 24 * 60 * 60, "/", null, false, true);
                             $registersuccesslogin = 1;
                             $registercheck = 1;
                             $user_id = $rowtemp['user_id'];

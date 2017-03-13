@@ -9,7 +9,7 @@ if (isset($_SESSION['loginuser']) && !empty($_SESSION['loginuser'])) {
     delete($sql);
     $logincheck = 1;
 }
-setcookie("loginname", "", time() - 3600, "/");
-setcookie("loginid", "", time() - 3600, "/");
+setcookie("loginname", "", time() - 3600, "/", null, false, true);
+setcookie("loginid", "", time() - 3600, "/", null, false, true);
 unset($_SESSION['loginuser']);
 ?>

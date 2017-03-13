@@ -26,9 +26,9 @@ defined("ZHANGXUAN") or die("no hacker.");
         <script type="text/javascript" src="resources/js/md5.js"></script>
         <?php
         if (SSLMODE == 1) {
-            echo '<script type="text/javascript" src="https://lib.sinaapp.com/js/jquery/2.0.3/jquery-2.0.3.min.js"></script>';
+            echo '<script type="text/javascript" src="https://lib.sinaapp.com/js/jquery/3.1.0/jquery-3.1.0.min.js"></script>';
         } else {
-            echo '<script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/2.0.3/jquery-2.0.3.min.js"></script>';
+            echo '<script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/3.1.0/jquery-3.1.0.min.js"></script>';
         }
         ?>
         <script>

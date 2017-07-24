@@ -21,7 +21,7 @@ php版本：至少为5.6.4，推荐7.0及以上，需安装php-gd、php-mysql、
 ## 安装步骤
 	1. 按照运行要求搭建好服务器环境；
 	2. 使用OpenSSL生成非对称加密所需的公钥值和私钥key文件，将key文件改名后放到storage目录下；
-	3. 复制.env.samle，将其重命名为.env.project，修改其中的内容，相关配置的注释都已经在.env内，修改完成后，将整个目录上传到服务器；
+	3. 复制.env.samle，将其重命名为.env.production，修改其中的内容，相关配置的注释都已经在.env内，修改完成后，将整个目录上传到服务器；
 	4. 将网站根目录指向public文件夹；
 	5. 在Linux环境下，运行"sh init.sh"，即可自动安装，包括数据库导入亦可一并完成，如果未显示"Db insert success."，请使用SQL工具自行导入database.sql到数据库，Windows环境请参考init.sh文件自行安装；
 	6. 根据不同的服务端使用不同的.htaccess文件，Apache和nginx的相关文件均在public目录下，重命名为.htaccess后使用，nginx需要在网站server配置文件中include相关.htaccess；

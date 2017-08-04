@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Wechat;
 
 
-use App\Http\Controllers\Account\LoginPageController;
 use App\Http\Controllers\Controller;
 use App\User;
 use AuthUtils;

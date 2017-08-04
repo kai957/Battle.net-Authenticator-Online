@@ -10,4 +10,7 @@
     .normaltd {
         cursor: auto;
     }
+    #layout-bottom {
+        background: #040404 no-repeat 50% 70%;
+    }
 </style>

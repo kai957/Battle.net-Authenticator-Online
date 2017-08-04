@@ -1,10 +1,16 @@
 <script>
     $(document).ready(function () {
-        $("#page-content").height($(".article-column").outerHeight(true));
+        if ($("#page-content").height() < $(".article-column").outerHeight(true)) {
+            $("#page-content").height($(".article-column").outerHeight(true));
+        }
         if ($("#layout-middle").outerHeight(true) < 360) {
             $("#layout-bottom").css("background", "url('/resources/img/toumin.png') no-repeat 50% 70%");
         }
     });
+    $(window).resize(function() {
+        $("#page-content").height($(".article-column").outerHeight(true));
+    });
+
     function shareweibo(e) {
         var _t = "{{config('app.meta_seo')}}";
         var _url = "{{config("app.url")}}";

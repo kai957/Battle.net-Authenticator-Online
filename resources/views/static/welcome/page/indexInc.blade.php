@@ -2,7 +2,7 @@
 <div id="layout-middle">
     <div id="homewrapper">
         <div id="content">
-            <div id="page-content" style="height: 2631px;">
+            <div id="page-content" style="height: 2914px;">
                 <div id="breadcrumb">
                     <ol class="ui-breadcrumb">
                         <li><a href="">首页</a></li>
@@ -32,6 +32,8 @@
                                                 href="http://{{config('app.simpleUrl')}}" title="普通版{{config('app.blizzard_auth_name')}}手机版">http://{{config('app.simpleUrl')}}
                                         </a>，您可以获得较快的访问体验
                                     @endif
+                                    <br>您也可以使用我们的微信小程序服务，请使用微信扫描下方的小程序码使用<br>
+                                    <img src="/resources/img/mini-program-qr-code.jpg" alt=""><br>
                                 </p>
                                 <p>
                                     我们支持CN/EU/US三大安全令颁发服务器的安全令申请，各服务器颁发的安全令的主要使用国家或地区如下：<br>

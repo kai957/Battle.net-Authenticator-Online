@@ -62,11 +62,14 @@ class DonatePageController extends Controller
             return view('static.donate.addDonateResult')->with('_USER', Auth::user())->with("topNavValueText", "添加捐赠")
                 ->with("errorString", "您不是管理员，无法添加捐赠信息");
         }
-        $donateName = $request->input('donateName', "匿名土豪");
+        $donateName = $request->input('donateName');
         $donateTime = $request->input('donateTime');
         $donateCurrency = $request->input("donateCurrency");
         $donateCount = $request->input("donateCount");
         $donateUserName = $request->input('userName');
+        if (empty($donateName)) {
+            $donateName = "匿名土豪";
+        }
         if (empty($donateCurrency)) {
             return view('static.donate.addDonate')->with('_USER', Auth::user())->with("topNavValueText", "添加捐赠")
                 ->with("errorString", "请填写币种信息。");
@@ -89,7 +92,7 @@ class DonatePageController extends Controller
             $user = new User();
             $user->initUserByUserName($donateUserName);
             if (!empty($user->getUserId()) && Functions::isInt($user->getUserId())) {//该操作自动设置用户解禁
-                if($user->getUserRight()==User::USER_BANED){
+                if ($user->getUserRight() == User::USER_BANED) {
                     $user->setUserRight(User::USER_NORMAL);
                 }
                 $user->setUserDonated(1);

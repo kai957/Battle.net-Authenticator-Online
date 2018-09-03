@@ -102,7 +102,7 @@
                                     </a>
                                 </strong>
                                 <span class="account-id">序列号：
-                                    @if($_USER->getUserRight() == $_USER::USER_NORMAL)
+                                    @if($_USER->getUserRight() == $_USER::USER_NORMAL || $_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION)
                                         {{$auth->getAuthSerial()}}
                                     @else
                                         共享账号无法获得该信息
@@ -120,6 +120,8 @@
                                         ($_USER->getUserDonated()== 1 && $authUtils->getAuthCount()<config('app.auth_max_count_donated_user'))
                                         ||
                                         ($authUtils->getAuthCount()<config('app.auth_max_count_standard_user'))
+                                        ||
+                                        $_USER->getUserRight()  == $_USER::USER_BUSINESS_COOPERATION
                                         )
                                             <li id="addWowTrial" class="trial no-subtitle border-4">
                                     <span class="game-icon">

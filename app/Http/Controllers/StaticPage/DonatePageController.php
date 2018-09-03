@@ -91,7 +91,7 @@ class DonatePageController extends Controller
         if (!empty($donateUserName)) {
             $user = new User();
             $user->initUserByUserName($donateUserName);
-            if (!empty($user->getUserId()) && Functions::isInt($user->getUserId())) {//该操作自动设置用户解禁
+            if (!empty($user->getUserId()) && Functions::isInt($user->getUserId())) {//该操作自动设置用户解禁，但是商务合作账号将变成普通账号，需手动再修改
                 if ($user->getUserRight() == User::USER_BANED) {
                     $user->setUserRight(User::USER_NORMAL);
                 }

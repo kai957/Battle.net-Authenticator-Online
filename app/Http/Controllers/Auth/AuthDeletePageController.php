@@ -64,7 +64,7 @@ class AuthDeletePageController extends Controller
             $encodeName = urlencode(base64_encode("查看安全令"));
             return redirect("login?from=$encodeUrl&fromName=$encodeName");
         }
-        if ($user->getUserRight() != User::USER_NORMAL) {
+        if ($user->getUserRight() == User::USER_SHARED) {
             return view('auth.delete.index')->with("_USER", $user)->with("topNavValueText", "删除安全令")
                 ->with('errorString', "共享账号不能删除安全令，即将返回主页")->with("jumpToUrl", "");
         }

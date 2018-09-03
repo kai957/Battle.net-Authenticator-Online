@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Auth;
 
 
 use App\Http\Controllers\Controller;
+use App\User;
 use AuthUtils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,17 +38,19 @@ class AuthAddPageController extends Controller
         }
         $authUtils = new AuthUtils();
         $authUtils->getAllAuth($user);
-        if ($user->getUserDonated() == 1 && $authUtils->getAuthCount() >= config('app.auth_max_count_donated_user')) {
-            return view('auth.add.error')->with('_USER', $user)->with("topNavValueText", "添加安全令")
-                ->with("errorString", "您已经拥有" . $authUtils->getAuthCount() . "枚安全令，已到捐赠者账号的最大添加数量")
-                ->with('jsString', "如要添加新的安全令，请到我的安全令中删除已有的安全令")
-                ->with("jumpToUrl", "myAuthList");
-        }
-        if ($user->getUserDonated() == 0 && $authUtils->getAuthCount() >= config('app.auth_max_count_standard_user')) {
-            return view('auth.add.error')->with('_USER', $user)->with("topNavValueText", "添加安全令")
-                ->with("errorString", "您已经拥有" . $authUtils->getAuthCount() . "枚安全令，已到普通账号的最大添加数量")
-                ->with('jsString', "如要添加新的安全令，请<a href=\"/donate\">捐赠</a>提升权限，或到我的安全令中删除已有的安全令")
-                ->with("jumpToUrl", "myAuthList");
+        if($user->getUserRight() != User::USER_BUSINESS_COOPERATION) {
+            if ($user->getUserDonated() == 1 && $authUtils->getAuthCount() >= config('app.auth_max_count_donated_user')) {
+                return view('auth.add.error')->with('_USER', $user)->with("topNavValueText", "添加安全令")
+                    ->with("errorString", "您已经拥有" . $authUtils->getAuthCount() . "枚安全令，已到捐赠者账号的最大添加数量")
+                    ->with('jsString', "如要添加新的安全令，请到我的安全令中删除已有的安全令")
+                    ->with("jumpToUrl", "myAuthList");
+            }
+            if ($user->getUserDonated() == 0 && $authUtils->getAuthCount() >= config('app.auth_max_count_standard_user')) {
+                return view('auth.add.error')->with('_USER', $user)->with("topNavValueText", "添加安全令")
+                    ->with("errorString", "您已经拥有" . $authUtils->getAuthCount() . "枚安全令，已到普通账号的最大添加数量")
+                    ->with('jsString', "如要添加新的安全令，请<a href=\"/donate\">捐赠</a>提升权限，或到我的安全令中删除已有的安全令")
+                    ->with("jumpToUrl", "myAuthList");
+            }
         }
         $captchaCodeUnix = time();
         $maxAuthCount = $user->getUserDonated() == 1 ? config('app.auth_max_count_donated_user') : config('app.auth_max_count_standard_user');

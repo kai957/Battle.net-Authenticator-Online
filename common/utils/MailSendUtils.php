@@ -1,4 +1,5 @@
 <?php
+
 use App\User;
 use Illuminate\Support\Facades\Mail;
 
@@ -10,8 +11,6 @@ use Illuminate\Support\Facades\Mail;
  */
 class MailSendUtils
 {
-
-
     /**
      * 发送注册成功邮件
      * @param User $user
@@ -29,7 +28,7 @@ class MailSendUtils
         "您的密码：" . Functions::emailHidePassword($unMd5Password) . " (只显示前三位)<br><br>" .
         "您的安全问题：" . $registerQuestion[$user->getUserQuestion()] . "<br><br>" .
         "您的问题答案：(出于安全考虑，该信息已隐藏)<br><br>" .
-        "您的账号类型：" . ($user->getUserRight() == User::USER_NORMAL ? "普通账号" : "共享账号") . "<br>" .
+        "您的账号类型：" . $user->getAccountRightString() . "<br>" .
         "您的注册邮箱：{$user->getUserEmail()}<br><br>" .
         "您的注册时间：{$user->getUserRegisterTime()}<br><br>" .
         empty($wechatNickname) ? "" : ("您绑定的微信账户昵称：$wechatNickname<br/>") .
@@ -61,7 +60,7 @@ class MailSendUtils
         $mailText = "本邮件为系统自动发送，您已经成功地修改了您的密码<br><br>" .
             "您的用户名：{$user->getUserName()}<br><br>" .
             "您的用户ID：{$user->getUserId()}<br><br>" .
-            "您的账号类型：" . ($user->getUserRight() == User::USER_NORMAL ? "普通账号" : "共享账号") . "<br>" .
+            "您的账号类型：" .  $user->getAccountRightString()  . "<br>" .
             "您的注册邮箱：{$user->getUserEmail()}<br><br>" .
             "您的注册时间：{$user->getUserRegisterTime()}<br><br>" .
             "您的新密码：" . Functions::emailHidePassword($unMd5Password) . " (只显示前三位)<br><br>" .
@@ -90,7 +89,7 @@ class MailSendUtils
         $mailText = "本邮件为系统自动发送，您正在申请重置您账号的密码<br><br>" .
             "您的用户名：{$user->getUserName()}<br><br>" .
             "您的用户ID：{$user->getUserId()}<br><br>" .
-            "您的账号类型：" . ($user->getUserRight() == User::USER_NORMAL ? "普通账号" : "共享账号") . "<br>" .
+            "您的账号类型：" .  $user->getAccountRightString()  . "<br>" .
             "您的注册邮箱：{$user->getUserEmail()}<br><br>" .
             "您的注册时间：{$user->getUserRegisterTime()}<br><br>" .
             "您还需要最后一步，点击下方的链接前往密码重置页面，并按照页面要求填写。<br><br>" .
@@ -121,7 +120,7 @@ class MailSendUtils
         $mailText = "本邮件为系统自动发送，您已经成功地重置了您的密码。<br><br>" .
             "您的用户名：{$user->getUserName()}<br><br>" .
             "您的用户ID：{$user->getUserId()}<br><br>" .
-            "您的账号类型：" . ($user->getUserRight() == User::USER_NORMAL ? "普通账号" : "共享账号") . "<br>" .
+            "您的账号类型：" .  $user->getAccountRightString()  . "<br>" .
             "您的注册邮箱：{$user->getUserEmail()}<br><br>" .
             "您的注册时间：{$user->getUserRegisterTime()}<br><br>" .
             "您的新密码：" . Functions::emailHidePassword($unMd5Password) . " (只显示前三位)<br><br>" .
@@ -151,7 +150,7 @@ class MailSendUtils
         $mailText = "本邮件为系统自动发送，您正在申请更改注册邮箱为当前邮箱<br><br>" .
             "您的用户名：{$user->getUserName()}<br><br>" .
             "您的用户ID：{$user->getUserId()}<br><br>" .
-            "您的账号类型：" . ($user->getUserRight() == User::USER_NORMAL ? "普通账号" : "共享账号") . "<br>" .
+            "您的账号类型：" .  $user->getAccountRightString()  . "<br>" .
             "您的注册时间：{$user->getUserRegisterTime()}<br><br>" .
             "您此前的邮箱地址为：$oldEmailAddress<br><br>" .
             "您现在的邮箱地址为：{$user->getUserEmail()}<br><br>" .
@@ -182,7 +181,7 @@ class MailSendUtils
         $mailText = "本邮件为系统自动发送，您需要验证" . config('app.name') . "账号的邮箱地址<br><br>" .
             "您的用户名：{$user->getUserName()}<br><br>" .
             "您的用户ID：{$user->getUserId()}<br><br>" .
-            "您的账号类型：" . ($user->getUserRight() == User::USER_NORMAL ? "普通账号" : "共享账号") . "<br>" .
+            "您的账号类型：" .  $user->getAccountRightString()  . "<br>" .
             "您的注册邮箱：{$user->getUserEmail()}<br><br>" .
             "您的注册时间：{$user->getUserRegisterTime()}<br><br>" .
             "为了今后能顺利管理账号，请点击以下链接确认您的邮箱地址<br><br>" .
@@ -206,7 +205,7 @@ class MailSendUtils
         $mailText = "本邮件为系统自动发送，您的账号已经绑定到微信小程序了<br><br>" .
             "您的用户名：{$user->getUserName()}<br><br>" .
             "您的用户ID：{$user->getUserId()}<br><br>" .
-            "您的账号类型：" . ($user->getUserRight() == User::USER_NORMAL ? "普通账号" : "共享账号") . "<br>" .
+            "您的账号类型：" .  $user->getAccountRightString()  . "<br>" .
             "您的注册邮箱：{$user->getUserEmail()}<br><br>" .
             "您的注册时间：{$user->getUserRegisterTime()}<br><br>" .
             (empty($wechatNickname) ? "" : "您绑定的微信账户昵称：$wechatNickname<br><br>") .

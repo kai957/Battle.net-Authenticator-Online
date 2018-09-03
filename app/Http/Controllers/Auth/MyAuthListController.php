@@ -32,7 +32,7 @@ class MyAuthListController extends Controller
             $encodeName = urlencode(base64_encode("账号管理"));
             return redirect("login?from=$encodeUrl&fromName=$encodeName");
         }
-        if (!($user->getUserRight() == User::USER_NORMAL)) {
+        if (!($user->getUserRight() == User::USER_NORMAL) && !($user->getUserRight() == User::USER_BUSINESS_COOPERATION)) {
             return redirect('account');
         }
         $authUtils = new AuthUtils();

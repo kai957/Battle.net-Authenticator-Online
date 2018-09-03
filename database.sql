@@ -83,7 +83,7 @@ CREATE TABLE `t_user` (
   `user_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `user_name` varchar(32) CHARACTER SET utf8 NOT NULL COMMENT '用户名',
   `user_pass` varchar(32) CHARACTER SET utf8 NOT NULL COMMENT '用户密码',
-  `user_right` int(4) NOT NULL DEFAULT '0' COMMENT '0默认,1共享,999封禁',
+  `user_right` int(4) NOT NULL DEFAULT '0' COMMENT '0默认,1共享,9商务合作,999封禁',
   `user_email` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT '用户邮箱',
   `user_email_check_token` varchar(40) CHARACTER SET utf8 NOT NULL COMMENT '用户邮箱确认Token',
   `user_email_checked` int(1) NOT NULL COMMENT '用户邮箱是否确认,1已确认,0未确认',

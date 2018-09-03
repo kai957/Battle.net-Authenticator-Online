@@ -44,7 +44,7 @@ class AccountController extends Controller
             return response()->json($json);
         }
         $user->setWechatOpenID($user->getWechatTokenBean()->getWechatTokenOpenId());
-        if ($user->getUserRight() != User::USER_NORMAL) {
+        if ($user->getUserRight() != User::USER_NORMAL && $user->getUserRight() != User::USER_BUSINESS_COOPERATION) {
             $json = ['code' => 403, 'message' => $user->getUserRight() == User::USER_SHARED ? "共享账号不能绑定到微信小程序" : "您的账号已被封禁，无法使用"];
             return response()->json($json);
         }
@@ -65,7 +65,7 @@ class AccountController extends Controller
             'data' => [
                 'hasAuth' => $authUtils->getAuthCount() > 0,
                 'authCount'=>$authUtils->getAuthCount(),
-                'canAddMoreAuth' => $authUtils->getAuthCount() < $userMaxAuthCount,
+                'canAddMoreAuth' => $user->getUserRight() == User::USER_BUSINESS_COOPERATION ? true : $authUtils->getAuthCount() < $userMaxAuthCount,
                 'userName' => $user->getUserName()
             ]];
         MailSendUtils::sendWechatBindEmail($user, $wechatNickname);

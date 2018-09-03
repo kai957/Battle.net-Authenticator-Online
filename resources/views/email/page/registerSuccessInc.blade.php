@@ -55,7 +55,7 @@
                                     您的密码：{{Functions::emailHidePassword($unMd5Password)}} （只显示前三位）<br>
                                     您的安全问题：{{$registerQuestion[$_USER->getUserQuestion()]}}<br>
                                     您的问题答案：(出于安全考虑，该信息已隐藏)<br>
-                                    您的账号类型：{{$_USER->getUserRight()==\App\User::USER_NORMAL?"普通账号":"共享账号"}}<br>
+                                    您的账号类型：{{$_USER->getAccountRightString()}}<br>
                                     您的注册邮箱：{{$_USER->getUserEmail()}}<br>
                                     您的注册时间：{{$_USER->getUserRegisterTime()}}<br>
                                     @if(!empty($wechatNickname))

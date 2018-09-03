@@ -82,17 +82,19 @@ class AuthAddTaskController extends Controller
         }
         $this->authUtils = new AuthUtils();
         $this->authUtils->getAllAuth($user);
-        if ($user->getUserDonated() == 1 && $this->authUtils->getAuthCount() >= config('app.auth_max_count_donated_user')) {
-            return view('auth.addResult.index')->with('_USER', $user)->with("topNavValueText", "添加安全令")
-                ->with("errorString", "您已经拥有" . $this->authUtils->getAuthCount() . "枚安全令，已到捐赠者账号的最大添加数量，添加失败")
-                ->with('jsString', "如要添加新的安全令，请到我的安全令中删除已有的安全令<br>")
-                ->with("jumpToUrl", "myAuthList");
-        }
-        if ($user->getUserDonated() == 0 && $this->authUtils->getAuthCount() >= config('app.auth_max_count_standard_user')) {
-            return view('auth.add.error')->with('_USER', $user)->with("topNavValueText", "添加安全令")
-                ->with("errorString", "您已经拥有" . $this->authUtils->getAuthCount() . "枚安全令，已到普通账号的最大添加数量，添加失败")
-                ->with('jsString', "如要添加新的安全令，请<a href=\"/donate\">捐赠</a>提升权限，或到我的安全令中删除已有的安全令")
-                ->with("jumpToUrl", "myAuthList");
+        if($user->getUserRight() != User::USER_BUSINESS_COOPERATION) {
+            if ($user->getUserDonated() == 1 && $this->authUtils->getAuthCount() >= config('app.auth_max_count_donated_user')) {
+                return view('auth.addResult.index')->with('_USER', $user)->with("topNavValueText", "添加安全令")
+                    ->with("errorString", "您已经拥有" . $this->authUtils->getAuthCount() . "枚安全令，已到捐赠者账号的最大添加数量，添加失败")
+                    ->with('jsString', "如要添加新的安全令，请到我的安全令中删除已有的安全令<br>")
+                    ->with("jumpToUrl", "myAuthList");
+            }
+            if ($user->getUserDonated() == 0 && $this->authUtils->getAuthCount() >= config('app.auth_max_count_standard_user')) {
+                return view('auth.add.error')->with('_USER', $user)->with("topNavValueText", "添加安全令")
+                    ->with("errorString", "您已经拥有" . $this->authUtils->getAuthCount() . "枚安全令，已到普通账号的最大添加数量，添加失败")
+                    ->with('jsString', "如要添加新的安全令，请<a href=\"/donate\">捐赠</a>提升权限，或到我的安全令中删除已有的安全令")
+                    ->with("jumpToUrl", "myAuthList");
+            }
         }
         $this->postAuthName = $request->input("authname");
         $this->postRegion = $request->input('region');

@@ -31,7 +31,7 @@
                                     </a>
                                 </strong>
                                 <span class="account-id">序列号：
-                                    @if($_USER->getUserRight() == $_USER::USER_NORMAL)
+                                    @if($_USER->getUserRight() == $_USER::USER_NORMAL || $_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION)
                                         {{$auth->getAuthSerial()}}
                                     @else
                                         共享账号无法获得该信息
@@ -47,6 +47,8 @@
                         ($_USER->getUserDonated()== 1 && $authUtils->getAuthCount()<config('app.auth_max_count_donated_user'))
                         ||
                         ($authUtils->getAuthCount()<config('app.auth_max_count_standard_user'))
+                        ||
+                        $_USER->getUserRight()  == $_USER::USER_BUSINESS_COOPERATION
                         )
                         <!--添加账号-->
                             <li id="addWowTrial" class="trial no-subtitle border-4">
@@ -71,11 +73,13 @@
         ($_USER->getUserDonated()== 1 && $authUtils->getAuthCount()<config('app.auth_max_count_donated_user'))
         ||
         ($authUtils->getAuthCount()<config('app.auth_max_count_standard_user'))
+        ||
+        $_USER->getUserRight()  == $_USER::USER_BUSINESS_COOPERATION
         )
             <a id="add-time" class="border-5" href="/addAuth">添加安全令</a>
         @endif
         <div style="margin-top: 7px;">
-            @if($_USER->getUserRight() == $_USER::USER_NORMAL)
+            @if($_USER->getUserRight() == $_USER::USER_NORMAL || $_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION)
                 <p>
                     <a class="" href="/changeEmailAddress" onclick="">
                         <span class="icon-16 icon-account-mail"></span>
@@ -95,7 +99,7 @@
                     <span class="icon-16-label">我的安全令</span>
                 </a>
             </p>
-            @if($_USER->getUserRight() == $_USER::USER_NORMAL && $authUtils->getAuthCount()>0)
+            @if(($_USER->getUserRight() == $_USER::USER_NORMAL || $_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION) && $authUtils->getAuthCount()>0)
                 <p>
                     <a class="" href="/MyAuthList.csv" onclick="">
                         <span class="icon-16 icon-account-download"></span>

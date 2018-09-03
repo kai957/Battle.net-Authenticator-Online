@@ -13,6 +13,7 @@ class User extends Authenticatable
     const USER_BANED = 999;
     const USER_SHARED = 1;
     const USER_NORMAL = 0;
+    const USER_BUSINESS_COOPERATION = 9;
 
     private $isLogin = false;
 
@@ -39,6 +40,22 @@ class User extends Authenticatable
     private $lastUsedSessionTime;
     private $userDonated;
     private $lastResetPasswordTime;
+
+
+    public function getAccountRightString()
+    {
+        if ($this->getUserRight() == User::USER_SHARED) {
+            return "共享账号";
+        }
+        if ($this->getUserRight() == User::USER_BUSINESS_COOPERATION) {
+            return "商务合作账号";
+        }
+        if ($this->getUserRight() == User::USER_BANED) {
+            return "封禁账号";
+        }
+        return "普通账号";
+    }
+
 
     /**
      * @param mixed $userId
@@ -250,7 +267,7 @@ class User extends Authenticatable
 
     public function initUserByWechatOpenId($openId)
     {
-        if(empty($openId)){
+        if (empty($openId)) {
             return;
         }
         $user = DBHelper::getUserByWechatOpenId($openId);

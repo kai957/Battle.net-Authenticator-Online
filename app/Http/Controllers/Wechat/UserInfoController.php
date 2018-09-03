@@ -32,7 +32,7 @@ class UserInfoController extends Controller
             'userName' => $user->getUserName(),
             'userEmail' => $user->getUserEmail(),
             'userEmailChecked' => $user->getUserEmailChecked() == 1,//邮箱是否确认成功(邮件点击链接)
-            'userRight' => $user->getUserRight(),//0：普通，1：共享，999：封禁
+            'userRight' => $user->getUserRight(),//0：普通，1：共享，9：商务合作，999：封禁
             'userRegisterTime' => $user->getUserRegisterTime(),
             'userLastLoginTime' => $user->getUserLastLoginTime(),
             'userThisLoginTime' => $user->getUserThisLoginTime(),

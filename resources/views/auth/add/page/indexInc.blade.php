@@ -10,7 +10,11 @@
             <div class="columns-2-1 landing-introduction">
                 <div class="column column-left">
                     <p>
-                        在这里，您可以通过三种方式快速地向您的账号中添加一枚新的{{config('app.blizzard_auth_name')}}，请注意，您最多只能添加{{$maxAuthCount}}枚安全令至您的账号。<br>
+                        @if($_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION)
+                        在这里，您可以通过三种方式快速地向您的账号中添加一枚新的{{config('app.blizzard_auth_name')}}，您是我们尊贵的商务合作账号，所以您可以无限制地添加新安全令。<br>
+                        @else
+                            在这里，您可以通过三种方式快速地向您的账号中添加一枚新的{{config('app.blizzard_auth_name')}}，请注意，您最多只能添加{{$maxAuthCount}}枚安全令至您的账号。<br>
+                        @endif
                         ①您可以通过{{config('app.name')}}的服务器直接向暴雪官方请求一枚新的{{config('app.blizzard_auth_name')}}，如同您在手机安全令APP上生成的一样<br>
                         ②提交您已有安全令的序列号及密钥(40位)，即可快速恢复一枚{{config('app.blizzard_auth_name')}}。<br>
                         ③提交您已有安全令的序列号及还原码(10位)，即可快速恢复一枚{{config('app.blizzard_auth_name')}}。

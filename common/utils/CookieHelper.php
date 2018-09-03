@@ -104,7 +104,7 @@ class CookieHelper
         $cookie['userName'] = $user->getUserName();
         $cookie['loginIp'] = $user->getUserThisTimeLoginIP();
         $cookie['userCookie'] = $user->getUserId() . "_{$time}_" . Functions::getRandomString();
-        if ($user->getUserRight() == User::USER_NORMAL) {
+        if ($user->getUserRight() == User::USER_NORMAL || $user->getUserRight() == User::USER_BUSINESS_COOPERATION) {
             $ttl = config("app.cookie_valid_hours");
         } else {
             $ttl = config("app.share_account_cookie_valid_hours");

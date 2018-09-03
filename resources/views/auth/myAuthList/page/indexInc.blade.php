@@ -11,6 +11,8 @@
                     ($_USER->getUserDonated()== 1 && $authUtils->getAuthCount()<config('app.auth_max_count_donated_user'))
                     ||
                     ($authUtils->getAuthCount()<config('app.auth_max_count_standard_user'))
+                    ||
+                    $_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION
                     )
                         <a class="ui-button button1" href="/addAuth">
                             <span
@@ -81,7 +83,7 @@
                                         <span id="morenpicspan{{$auth->getAuthId()}}"></span><span ondblclick="ShowElement(this,{{$auth->getAuthId()}})" id="authnamecode{{$auth->getAuthId()}}">{{$auth->getAuthName()}}</span>
                                     </td>
                                 @endif
-                                @if($_USER->getUserRight() == $_USER::USER_NORMAL)
+                                @if($_USER->getUserRight() == $_USER::USER_NORMAL || $_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION)
                                     <td onclick="location.href='/auth?{{HttpFormConstant::FORM_KEY_AUTH_ID}}={{$auth->getAuthId()}}'"
                                         class="normaltd authxuliehao" valign="top">
                                         <span>
@@ -96,7 +98,7 @@
                                         </span>
                                     </td>
                                 @endif
-                                @if($_USER->getUserRight() == $_USER::USER_NORMAL)
+                                @if($_USER->getUserRight() == $_USER::USER_NORMAL || $_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION)
                                     <td onclick="location.href='/auth?{{HttpFormConstant::FORM_KEY_AUTH_ID}}={{$auth->getAuthId()}}'"
                                         class="normaltd authhuanyuanma" valign="top">
                                         <span>

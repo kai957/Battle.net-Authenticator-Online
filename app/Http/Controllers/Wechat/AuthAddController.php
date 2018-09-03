@@ -46,13 +46,15 @@ class AuthAddController extends Controller
     {
         $this->authUtils = new AuthUtils();
         $this->authUtils->getAllAuth($user);
-        if ($user->getUserDonated() == 1 && $this->authUtils->getAuthCount() >= config('app.auth_max_count_donated_user')) {
-            $json = ['code' => 403, "message" => "您已拥有" . $this->authUtils->getAuthCount() . "枚安全令，已到捐赠者账号的最大添加数量，无法添加新的安全令"];
-            return $json;
-        }
-        if ($user->getUserDonated() == 0 && $this->authUtils->getAuthCount() >= config('app.auth_max_count_standard_user')) {
-            $json = ['code' => 403, "message" => "您已拥有" . $this->authUtils->getAuthCount() . "枚安全令，已到普通账号的最大添加数量，无法添加新的安全令"];
-            return $json;
+        if ($user->getUserRight() != User::USER_BUSINESS_COOPERATION) {
+            if ($user->getUserDonated() == 1 && $this->authUtils->getAuthCount() >= config('app.auth_max_count_donated_user')) {
+                $json = ['code' => 403, "message" => "您已拥有" . $this->authUtils->getAuthCount() . "枚安全令，已到捐赠者账号的最大添加数量，无法添加新的安全令"];
+                return $json;
+            }
+            if ($user->getUserDonated() == 0 && $this->authUtils->getAuthCount() >= config('app.auth_max_count_standard_user')) {
+                $json = ['code' => 403, "message" => "您已拥有" . $this->authUtils->getAuthCount() . "枚安全令，已到普通账号的最大添加数量，无法添加新的安全令"];
+                return $json;
+            }
         }
         $this->postAuthName = $request->json("authName");
         $this->postRegion = $request->json('region');
@@ -106,7 +108,7 @@ class AuthAddController extends Controller
                 'data' => [
                     'authId' => $newAuthId,
                     'isDefault' => $setDefault,
-                    'canAddMoreAuth' => $authUtils->getAuthCount() < $userMaxAuthCount,
+                    'canAddMoreAuth' =>  $user->getUserRight() == User::USER_BUSINESS_COOPERATION ? true : $authUtils->getAuthCount() < $userMaxAuthCount,
                     'authCount' => $authUtils->getAuthCount()
                 ]
             ];
@@ -167,7 +169,7 @@ class AuthAddController extends Controller
                 'data' => [
                     'authId' => $newAuthId,
                     'isDefault' => $setDefault,
-                    'canAddMoreAuth' => $authUtils->getAuthCount() < $userMaxAuthCount,
+                    'canAddMoreAuth' =>  $user->getUserRight() == User::USER_BUSINESS_COOPERATION ? true : $authUtils->getAuthCount() < $userMaxAuthCount,
                     'authCount' => $authUtils->getAuthCount()]
             ];
             return response()->json($json);

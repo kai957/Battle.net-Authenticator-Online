@@ -45,7 +45,7 @@
                                 <p class="alignleft" style="margin: 0;padding: 0;border: 0;outline: 0;text-align: left;margin-bottom: 5px;">
                                     您的用户名：{{$_USER->getUserName()}}<br>
                                     您的用户ID：{{$_USER->getUserId()}}<br>
-                                    您的账号类型：{{$_USER->getUserRight()==\App\User::USER_NORMAL?"普通账号":"共享账号"}}<br>
+                                    您的账号类型：{{$_USER->getAccountRightString()}}<br>
                                     您的注册时间：{{$_USER->getUserRegisterTime()}}<br><br>
                                 </p>
                                 <h3 class="article-ci" style="width:66.66%;border-bottom: 1px solid rgb(170,170,170);outline: 0;font-size: 20px;font-weight: normal;color: #000000;padding: 0 0 3px;margin: 0 0 11px;"> 邮箱地址确认 </h3>

@@ -11,13 +11,15 @@
                 @else
                     普通账号:全权限
                 @endif
+            @elseif($_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION)
+                商务合作账号：全权限
             @else
                 共享账号:不能获取序列号和还原码
             @endif
         </p>
         <h4 class="subcategory">邮箱</h4>
         <p>
-            @if($_USER->getUserRight() == $_USER::USER_NORMAL)
+            @if($_USER->getUserRight() == $_USER::USER_NORMAL || $_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION)
                 {{$_USER->getUserEmail()}}
             @else
                 共享账号隐藏邮箱信息
@@ -55,7 +57,11 @@
             </p>
         @endif
         <h4 class="subcategory">已添加安全令数量</h4>
-        @if($_USER->getUserDonated()==1)
+        @if($_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION)
+            <p class='has-authenticator-has-active'>
+                {{$authUtils->getAuthCount()}}
+            </p>
+        @elseif($_USER->getUserDonated()==1)
             @if($authUtils->getAuthCount()<round(config('app.auth_max_count_donated_user')*config('app.auth_hint_logo_donated_coefficient')))
                 <p class='has-authenticator-has-active'>
                     {{$authUtils->getAuthCount()}}/{{config('app.auth_max_count_donated_user')}}

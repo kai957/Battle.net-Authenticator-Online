@@ -32,7 +32,7 @@ class UserCheckMiddleware
         }
         if (Auth::user() != null && Auth::user() instanceof User) {
             if (Auth::user()->getUserRight() == User::USER_BANED) {
-                return response(view('error.dbError', compact('topNavValueText')));
+                return response("You are banned!");
             }
         }
     }
@@ -79,9 +79,6 @@ class UserCheckMiddleware
             empty($user->getUserName()) || $cookieBean->getUserName() !== $user->getUserName()
         ) {
             self::removeLoginState($request, $cookieHelper);
-            $request->session()->flush();
-            RedisHelper::removeLoginCookie($cookieBean->getUserCookie());
-            $cookieHelper->removeCookie();
             return;
         }
         if ($user->getLastResetPasswordTime() >= $cookieBean->getCreateTimeStamp()) {
@@ -94,7 +91,7 @@ class UserCheckMiddleware
             self::removeLoginState($request, $cookieHelper);
             return;
         }
-        if ($user->getUserRight() == User::USER_NORMAL) {
+        if ($user->getUserRight() != User::USER_SHARED) {
             $request->session()->put(KeyConstant::SESSION_USERID, $user->getUserId());
         }
         $user->setIsLogin(true);

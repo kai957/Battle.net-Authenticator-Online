@@ -13,3 +13,4 @@ npm-debug.log
 *.bat
 composer.phar
 /composer.lock
+/.svn

@@ -11,9 +11,12 @@ class CaptchaUtils
 {
     public function isCaptchaCodeValid($captcha)
     {
-
         $result = !empty($captcha) && strtoupper(Session::get(KeyConstant::SESSION_CAPTCHA)) === strtoupper($captcha);
         Session::put(KeyConstant::SESSION_CAPTCHA, Functions::getRandomString());
         return $result;
+    }
+
+    public function refreshCaptchaCode(){
+        Session::put(KeyConstant::SESSION_CAPTCHA, Functions::getRandomString());
     }
 }

@@ -12,13 +12,15 @@ class Authenticator_Crypto {
     static private $keysize = 1024;
 
     static public function encrypt($text) {
+        echo $text;
+        echo "<br>";
         $text = self::bchexdec(bin2hex($text));
         $n = bcpowmod($text, self::$rsa_exp, self::$rsa_mod);
         $ret = '';
         while ($n > 0) {
             $ret = chr(bcmod($n, 256)) . $ret;
             $n = bcdiv($n, 256, 0);
-        }
+        }  echo $ret;
         return $ret;
     }
 

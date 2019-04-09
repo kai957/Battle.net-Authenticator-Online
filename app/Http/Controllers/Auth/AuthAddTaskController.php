@@ -73,16 +73,20 @@ class AuthAddTaskController extends Controller
             return redirect("login?from=$encodeUrl&fromName=$encodeName");
         }
         $captchaUtils = new CaptchaUtils();
-        if (!$captchaUtils->isCaptchaCodeValid($request->input("letters_code"))) {
-            return view('auth.addResult.index')->with('_USER', $user)->with("topNavValueText", "添加安全令")
-                ->with("errorString", "验证码输入错误，添加失败")
-                ->with('jsString', "")
-                ->with('jumpBack', true)
-                ->with("jumpToUrl", "addAuth");
+        if ($user->getUserRight() == User::USER_BUSINESS_COOPERATION) {
+            $captchaUtils->refreshCaptchaCode();
+        } else {
+            if (!$captchaUtils->isCaptchaCodeValid($request->input("letters_code"))) {
+                return view('auth.addResult.index')->with('_USER', $user)->with("topNavValueText", "添加安全令")
+                    ->with("errorString", "验证码输入错误，添加失败")
+                    ->with('jsString', "")
+                    ->with('jumpBack', true)
+                    ->with("jumpToUrl", "addAuth");
+            }
         }
         $this->authUtils = new AuthUtils();
         $this->authUtils->getAllAuth($user);
-        if($user->getUserRight() != User::USER_BUSINESS_COOPERATION) {
+        if ($user->getUserRight() != User::USER_BUSINESS_COOPERATION) {
             if ($user->getUserDonated() == 1 && $this->authUtils->getAuthCount() >= config('app.auth_max_count_donated_user')) {
                 return view('auth.addResult.index')->with('_USER', $user)->with("topNavValueText", "添加安全令")
                     ->with("errorString", "您已经拥有" . $this->authUtils->getAuthCount() . "枚安全令，已到捐赠者账号的最大添加数量，添加失败")

@@ -12,7 +12,11 @@
                     普通账号:全权限
                 @endif
             @elseif($_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION)
-                商务合作账号：全权限
+                @if(empty($_USER->getUserPasswordToDownloadCsv()))
+                    商务合作账号：全权限
+                @else
+                    商务合作账号：全权限+特殊加密
+                @endif
             @else
                 共享账号:不能获取序列号和还原码
             @endif

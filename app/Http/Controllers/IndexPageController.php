@@ -33,10 +33,15 @@ class IndexPageController extends Controller
         $authUtils = new AuthUtils();
         $authUtils->getAllAuth($user);
         if ($authUtils->getAuthCount() > 0) {
+            if ($user->getUserShowAllInIndex() != 0 && $user->getUserShowAllInIndex() != false) {
+                return view('static.index.allAuth')->with("_USER", $user)->with("topNavValueText", "首页")
+                    ->with("authUtils", $authUtils)->with('authList', $authUtils->getAuthList())
+                    ->with('pageUrl', "/");
+            }
             return view('static.index.auth')->with("_USER", $user)->with("topNavValueText", "默认安全令")
                 ->with("authUtils", $authUtils)->with('authBean', $authUtils->getDefaultAuth())
                 ->with('fromGetDefault', true)
-                ->with('pageUrl', "/auth");
+                ->with('pageUrl', "/");
         }
         $captchaCodeUnix = time();
         $maxAuthCount = $user->getUserDonated() == 1 ? config('app.auth_max_count_donated_user') : config('app.auth_max_count_standard_user');

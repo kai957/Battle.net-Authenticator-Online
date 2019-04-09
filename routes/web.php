@@ -72,6 +72,7 @@ Route::get("api/auth/setDefault", "Auth\AuthApiController@setDefault");
 Route::get("api/auth/changeName", "Auth\AuthApiController@changeName");
 Route::get("api/auth/deleteAuth", "Auth\AuthApiController@deleteAuth");
 Route::get("api/auth/getCode", "Auth\AuthApiController@getCode");
+Route::get("api/auth/getAllCode", "Auth\AuthApiController@getAllCode");
 
 #一键登录相关API及页面
 Route::get('api/oneButtonAuth/getRequestInfo', 'OneButtonLogin\ApiController@getRequestInfo');//获取是否有一键登录请求

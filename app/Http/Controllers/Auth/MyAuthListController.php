@@ -26,6 +26,7 @@ class MyAuthListController extends Controller
 
     function getCsv(Request $request)
     {
+        $downloadPassword = $request->input("pass");
         $user = Auth::user();
         if (!$user->getIsLogin()) {
             $encodeUrl = urlencode(base64_encode("account"));
@@ -35,6 +36,7 @@ class MyAuthListController extends Controller
         if (!($user->getUserRight() == User::USER_NORMAL) && !($user->getUserRight() == User::USER_BUSINESS_COOPERATION)) {
             return redirect('account');
         }
+
         $authUtils = new AuthUtils();
         $authUtils->getAllAuth($user, false);
         header('Content-Type: application/csv');
@@ -42,13 +44,18 @@ class MyAuthListController extends Controller
         try {
             $output = fopen('php://output', 'w');
             $list = "安全令名称,安全令序列号,安全令密钥,安全令还原码\r\n";
-            foreach ($authUtils->getAuthList() as $auth) {
-                $string = htmlspecialchars($auth->getAuthName()) . "," .
-                    htmlspecialchars($auth->getAuthSerial()) . "," .
-                    htmlspecialchars($auth->getAuthSecret()) . "," .
-                    htmlspecialchars(strtoupper($auth->getAuthRestoreCode())) .
-                    "\r\n";
-                $list .= $string;
+            if($user->getUserRight() == User::USER_BUSINESS_COOPERATION && !empty($user->getUserPasswordToDownloadCsv()) &&
+                $downloadPassword !== $user->getUserPasswordToDownloadCsv()){
+                $list .= "输入了,错误的,CSV备份,下载密码\r\n";
+            }else{
+                foreach ($authUtils->getAuthList() as $auth) {
+                    $string = htmlspecialchars($auth->getAuthName()) . "," .
+                        htmlspecialchars($auth->getAuthSerial()) . "," .
+                        htmlspecialchars($auth->getAuthSecret()) . "," .
+                        htmlspecialchars(strtoupper($auth->getAuthRestoreCode())) .
+                        "\r\n";
+                    $list .= $string;
+                }
             }
             $list = "\xEF\xBB\xBF" . $list;
             fwrite($output, $list);

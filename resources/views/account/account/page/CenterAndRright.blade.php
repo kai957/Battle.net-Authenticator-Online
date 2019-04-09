@@ -31,8 +31,11 @@
                                     </a>
                                 </strong>
                                 <span class="account-id">序列号：
-                                    @if($_USER->getUserRight() == $_USER::USER_NORMAL || $_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION)
+                                    @if($_USER->getUserRight() == $_USER::USER_NORMAL ||
+                                        ($_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION && empty($_USER->getUserPasswordToDownloadCsv())))
                                         {{$auth->getAuthSerial()}}
+                                    @elseif($_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION && !empty($_USER->getUserPasswordToDownloadCsv()))
+                                        商业合作加密账号
                                     @else
                                         共享账号无法获得该信息
                                     @endif
@@ -99,13 +102,22 @@
                     <span class="icon-16-label">我的安全令</span>
                 </a>
             </p>
-            @if(($_USER->getUserRight() == $_USER::USER_NORMAL || $_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION) && $authUtils->getAuthCount()>0)
-                <p>
-                    <a class="" href="/MyAuthList.csv" onclick="">
-                        <span class="icon-16 icon-account-download"></span>
-                        <span class="icon-16-label">下载我的安全令备份CSV</span>
-                    </a>
-                </p>
+            @if(($_USER->getUserRight() == $_USER::USER_NORMAL || $_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION) && $authUtils->getAuthCount() > 0)
+                @if(empty($_USER->getUserPasswordToDownloadCsv()))
+                    <p>
+                        <a class="" href="/MyAuthList.csv" onclick="">
+                            <span class="icon-16 icon-account-download"></span>
+                            <span class="icon-16-label">下载我的安全令备份CSV</span>
+                        </a>
+                    </p>
+                @else
+                    <p>
+                        <a class="" href="javascript:void(0);" onclick="downloadCsvByPassword();">
+                            <span class="icon-16 icon-account-download"></span>
+                            <span class="icon-16-label">输入密码下载安全令CSV</span>
+                        </a>
+                    </p>
+                @endif
             @endif
             <p>
                 <a class="" href="/faq" onclick="">

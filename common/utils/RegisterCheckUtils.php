@@ -171,6 +171,7 @@ class RegisterCheckUtils
         $user->setUserThisLoginTime($this->registerDate);
         $user->setLastUsedSessionTime(time());
         $user->setUserDonated(0);
+        $user->setUserPasswordToDownloadCsv(null);
         $newUserId = DBHelper::insertNewUser($user);
         if ($newUserId == false || empty($newUserId) || !Functions::isInt($newUserId)) {
             $this->registerErrorCode = 9;

@@ -12,3 +12,4 @@ npm-debug.log
 .env.production
 *.bat
 composer.phar
+/composer.lock

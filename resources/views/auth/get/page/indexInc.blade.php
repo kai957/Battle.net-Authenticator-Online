@@ -102,8 +102,11 @@
                                     </a>
                                 </strong>
                                 <span class="account-id">序列号：
-                                    @if($_USER->getUserRight() == $_USER::USER_NORMAL || $_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION)
+                                    @if($_USER->getUserRight() == $_USER::USER_NORMAL ||
+                                        ($_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION && empty($_USER->getUserPasswordToDownloadCsv())))
                                         {{$auth->getAuthSerial()}}
+                                    @elseif($_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION && !empty($_USER->getUserPasswordToDownloadCsv()))
+                                        商业合作加密账号
                                     @else
                                         共享账号无法获得该信息
                                     @endif

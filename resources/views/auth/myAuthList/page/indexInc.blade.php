@@ -75,19 +75,32 @@
                                 </td>
                                 @if($auth->getAuthDefault())
                                     <td class="normaltd authmincheng" valign="top">
-                                        <span id="morenpicspan{{$auth->getAuthId()}}"><img class='morenauthleftpic' src='/resources/img/moren.png'/></span>
-                                        <span ondblclick="ShowElement(this,{{$auth->getAuthId()}})" id="authnamecode{{$auth->getAuthId()}}">{{$auth->getAuthName()}}</span>
+                                        <span id="morenpicspan{{$auth->getAuthId()}}"><img class='morenauthleftpic'
+                                                                                           src='/resources/img/moren.png'/></span>
+                                        <span ondblclick="ShowElement(this,{{$auth->getAuthId()}})"
+                                              id="authnamecode{{$auth->getAuthId()}}">{{$auth->getAuthName()}}</span>
                                     </td>
                                 @else
                                     <td class="normaltd authmincheng" valign="top">
-                                        <span id="morenpicspan{{$auth->getAuthId()}}"></span><span ondblclick="ShowElement(this,{{$auth->getAuthId()}})" id="authnamecode{{$auth->getAuthId()}}">{{$auth->getAuthName()}}</span>
+                                        <span id="morenpicspan{{$auth->getAuthId()}}"></span><span
+                                                ondblclick="ShowElement(this,{{$auth->getAuthId()}})"
+                                                id="authnamecode{{$auth->getAuthId()}}">{{$auth->getAuthName()}}</span>
                                     </td>
                                 @endif
-                                @if($_USER->getUserRight() == $_USER::USER_NORMAL || $_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION)
+                                @if($_USER->getUserRight() == $_USER::USER_NORMAL ||
+                                ($_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION && empty($_USER->getUserPasswordToDownloadCsv()))
+                                )
                                     <td onclick="location.href='/auth?{{HttpFormConstant::FORM_KEY_AUTH_ID}}={{$auth->getAuthId()}}'"
                                         class="normaltd authxuliehao" valign="top">
                                         <span>
                                             {{$auth->getAuthSerial()}}
+                                        </span>
+                                    </td>
+                                @elseif($_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION && !empty($_USER->getUserPasswordToDownloadCsv()))
+                                    <td onclick="location.href='/auth?{{HttpFormConstant::FORM_KEY_AUTH_ID}}={{$auth->getAuthId()}}'"
+                                        class="normaltd authxuliehao" valign="top">
+                                        <span>
+                                            商业合作加密账号
                                         </span>
                                     </td>
                                 @else
@@ -98,11 +111,19 @@
                                         </span>
                                     </td>
                                 @endif
-                                @if($_USER->getUserRight() == $_USER::USER_NORMAL || $_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION)
+                                @if($_USER->getUserRight() == $_USER::USER_NORMAL ||
+                                ($_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION && empty($_USER->getUserPasswordToDownloadCsv())))
                                     <td onclick="location.href='/auth?{{HttpFormConstant::FORM_KEY_AUTH_ID}}={{$auth->getAuthId()}}'"
                                         class="normaltd authhuanyuanma" valign="top">
                                         <span>
                                             {{$auth->getAuthRestoreCode()}}
+                                        </span>
+                                    </td>
+                                @elseif($_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION && !empty($_USER->getUserPasswordToDownloadCsv()))
+                                    <td onclick="location.href='/auth?{{HttpFormConstant::FORM_KEY_AUTH_ID}}={{$auth->getAuthId()}}'"
+                                        class="normaltd authxuliehao" valign="top">
+                                        <span>
+                                            请通过下载CSV查看
                                         </span>
                                     </td>
                                 @else

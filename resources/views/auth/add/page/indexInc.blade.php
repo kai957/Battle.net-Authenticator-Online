@@ -11,11 +11,14 @@
                 <div class="column column-left">
                     <p>
                         @if($_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION)
-                        在这里，您可以通过三种方式快速地向您的账号中添加一枚新的{{config('app.blizzard_auth_name')}}，您是我们尊贵的商务合作账号，所以您可以无限制地添加新安全令。<br>
+                            在这里，您可以通过三种方式快速地向您的账号中添加一枚新的{{config('app.blizzard_auth_name')}}
+                            ，您是我们尊贵的商务合作账号，所以您可以无限制地添加新安全令。<br>
                         @else
-                            在这里，您可以通过三种方式快速地向您的账号中添加一枚新的{{config('app.blizzard_auth_name')}}，请注意，您最多只能添加{{$maxAuthCount}}枚安全令至您的账号。<br>
+                            在这里，您可以通过三种方式快速地向您的账号中添加一枚新的{{config('app.blizzard_auth_name')}}
+                            ，请注意，您最多只能添加{{$maxAuthCount}}枚安全令至您的账号。<br>
                         @endif
-                        ①您可以通过{{config('app.name')}}的服务器直接向暴雪官方请求一枚新的{{config('app.blizzard_auth_name')}}，如同您在手机安全令APP上生成的一样<br>
+                        ①您可以通过{{config('app.name')}}的服务器直接向暴雪官方请求一枚新的{{config('app.blizzard_auth_name')}}
+                        ，如同您在手机安全令APP上生成的一样<br>
                         ②提交您已有安全令的序列号及密钥(40位)，即可快速恢复一枚{{config('app.blizzard_auth_name')}}。<br>
                         ③提交您已有安全令的序列号及还原码(10位)，即可快速恢复一枚{{config('app.blizzard_auth_name')}}。
                     </p>
@@ -156,7 +159,8 @@
                                     </div>
 
 
-                                    <div class="input-row input-row-text">
+                                    @if(!($_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION))
+                                        <div class="input-row input-row-text">
                                         <span class="input-left">
                                             <label for="letters_code1">
                                                 <span class="label-text">
@@ -165,7 +169,7 @@
                                                 <span class="input-required">*</span>
                                             </label>
                                         </span>
-                                        <span class="input-right">
+                                            <span class="input-right">
                                             <div class="imgandreloader">
                                                 <div id="captcha-image"><img id="sec-string1" width="200" height="70"
                                                                              onclick="refreshCaptcha(1);document.getElementById('letters_code1').focus();"
@@ -194,8 +198,8 @@
                                                     <input id="persistLogin" type="checkbox" name="morenauthset">设置为默认安全令
                                                 </label> </span>
                                         </span>
-                                    </div>
-
+                                        </div>
+                                    @endif
 
                                     <div class="submit-row">
                                         <div class="input-left"></div>
@@ -360,8 +364,8 @@
                                         </span>
                                     </div>
 
-
-                                    <div class="input-row input-row-text">
+                                    @if(!($_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION))
+                                        <div class="input-row input-row-text">
                                         <span class="input-left">
                                             <label for="letters_code2">
                                                 <span class="label-text">
@@ -370,7 +374,7 @@
                                                 <span class="input-required">*</span>
                                             </label>
                                         </span>
-                                        <span class="input-right">
+                                            <span class="input-right">
                                             <div class="imgandreloader">
                                                 <div id="captcha-image"><img id="sec-string2" width="200" height="70"
                                                                              onclick="refreshCaptcha(2);document.getElementById('letters_code2').focus();"
@@ -399,8 +403,8 @@
                                                     <input id="persistLogin2" type="checkbox" name="morenauthset">设置为默认安全令
                                                 </label></span>
                                         </span>
-                                    </div>
-
+                                        </div>
+                                    @endif
 
                                     <div class="submit-row">
                                         <div class="input-left"></div>
@@ -573,7 +577,8 @@
                                     </div>
 
 
-                                    <div class="input-row input-row-text">
+                                    @if(!($_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION))
+                                        <div class="input-row input-row-text">
                                         <span class="input-left">
                                             <label for="letters_code3">
                                                 <span class="label-text">
@@ -582,7 +587,7 @@
                                                 <span class="input-required">*</span>
                                             </label>
                                         </span>
-                                        <span class="input-right">
+                                            <span class="input-right">
                                             <div class="imgandreloader">
                                                 <div id="captcha-image"><img id="sec-string3" width="200" height="70"
                                                                              onclick="refreshCaptcha(3);document.getElementById('letters_code3').focus();"
@@ -611,8 +616,8 @@
                                                     <input id="persistLogin3" type="checkbox" name="morenauthset">设置为默认安全令
                                                 </label></span>
                                         </span>
-                                    </div>
-
+                                        </div>
+                                    @endif
 
                                     <div class="submit-row">
                                         <div class="input-left"></div>

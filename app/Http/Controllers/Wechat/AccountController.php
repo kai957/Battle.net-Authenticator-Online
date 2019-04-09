@@ -48,6 +48,10 @@ class AccountController extends Controller
             $json = ['code' => 403, 'message' => $user->getUserRight() == User::USER_SHARED ? "共享账号不能绑定到微信小程序" : "您的账号已被封禁，无法使用"];
             return response()->json($json);
         }
+        if ($user->getUserRight() == User::USER_BUSINESS_COOPERATION && !empty($user->getUserPasswordToDownloadCsv())) {
+            $json = ['code' => 403, 'message' => "商业合作加密账号不能绑定到微信小程序"];
+            return response()->json($json);
+        }
         $user->setUserLastLoginTime($user->getUserThisLoginTime());
         $user->setUserThisLoginTime(date('Y-m-d H:i:s'));
         $user->setUserLastTimeLoginIP($user->getUserThisTimeLoginIP());
@@ -64,7 +68,7 @@ class AccountController extends Controller
         $json = ['code' => 200, 'message' => '小程序账号绑定成功',
             'data' => [
                 'hasAuth' => $authUtils->getAuthCount() > 0,
-                'authCount'=>$authUtils->getAuthCount(),
+                'authCount' => $authUtils->getAuthCount(),
                 'canAddMoreAuth' => $user->getUserRight() == User::USER_BUSINESS_COOPERATION ? true : $authUtils->getAuthCount() < $userMaxAuthCount,
                 'userName' => $user->getUserName()
             ]];

@@ -23,6 +23,8 @@ class User extends Authenticatable
     private $userName;
     private $userPass;
     private $userRight;
+    private $userShowAllInIndex;
+    private $userPasswordToDownloadCsv;//仅供商业合作用户，这个为空则没事，否则不能查看还原码，且下载csv需要先输入密码
     private $userEmail;
     private $userEmailChecked;
     private $userRegisterTime;
@@ -54,6 +56,22 @@ class User extends Authenticatable
             return "封禁账号";
         }
         return "普通账号";
+    }
+
+    /**
+     * @param mixed $userShowAllInIndex
+     */
+    public function setUserShowAllInIndex($userShowAllInIndex)
+    {
+        $this->userShowAllInIndex = $userShowAllInIndex;
+    }
+
+    /**
+     * @param mixed $userPasswordToDownloadCsv
+     */
+    public function setUserPasswordToDownloadCsv($userPasswordToDownloadCsv)
+    {
+        $this->userPasswordToDownloadCsv = $userPasswordToDownloadCsv;
     }
 
 
@@ -293,6 +311,8 @@ class User extends Authenticatable
         $this->userName = $user->user_name;
         $this->userPass = $user->user_pass;
         $this->userRight = $user->user_right;
+        $this->userShowAllInIndex=$user->user_show_all_in_index;
+        $this->userPasswordToDownloadCsv=$user->user_auth_pass;
         $this->userEmail = $user->user_email;
         $this->userEmailChecked = $user->user_email_checked;
         $this->userRegisterTime = $user->user_register_time;
@@ -512,6 +532,23 @@ class User extends Authenticatable
     public function setWechatTokenBean($wechatTokenBean)
     {
         $this->wechatTokenBean = $wechatTokenBean;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserShowAllInIndex()
+    {
+        return $this->userShowAllInIndex;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getUserPasswordToDownloadCsv()
+    {
+        return $this->userPasswordToDownloadCsv;
     }
 
 

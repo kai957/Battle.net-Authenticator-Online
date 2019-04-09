@@ -56,8 +56,11 @@ class AuthController extends Controller
             'authImage' => "http://" . config('app.simpleUrl') . $authUtils->getAuthImageUrls()[$authBean->getAuthImage()],
             'isDefault' => $authBean->getAuthDefault(),
             'authCount' => $authUtils->getAuthCount(),
-            'canAddMoreAuth' =>  $user->getUserRight() == User::USER_BUSINESS_COOPERATION ? true : $authUtils->getAuthCount() < $userMaxAuthCount
+            'canAddMoreAuth' => $user->getUserRight() == User::USER_BUSINESS_COOPERATION ? true : $authUtils->getAuthCount() < $userMaxAuthCount
         ];
+        if ($user->getUserRight() == User::USER_BUSINESS_COOPERATION && !empty($user->getUserPasswordToDownloadCsv())) {//加密商业账户，不能看
+            $authInfo = [];
+        }
         $json = ['code' => 200, 'message' => "获取安全令信息成功",
             'data' => $authInfo];
         return response()->json($json);
@@ -118,7 +121,7 @@ class AuthController extends Controller
         $userMaxAuthCount = $user->getUserDonated() == 1 ? config('app.auth_max_count_donated_user') : config('app.auth_max_count_standard_user');
         $data['authCount'] = $authUtils->getAuthCount();
         $data['hasAuth'] = $authUtils->getAuthCount() > 0;
-        $data['canAddMoreAuth'] =  $user->getUserRight() == User::USER_BUSINESS_COOPERATION ? true : $authUtils->getAuthCount() < $userMaxAuthCount;
+        $data['canAddMoreAuth'] = $user->getUserRight() == User::USER_BUSINESS_COOPERATION ? true : $authUtils->getAuthCount() < $userMaxAuthCount;
         $data['userName'] = $user->getUserName();
         if ($authUtils->getAuthCount() > 0) {
             $authBean = $authUtils->getDefaultAuth() == null ? $authUtils->getAuthList()[0] : $authUtils->getDefaultAuth();
@@ -142,6 +145,9 @@ class AuthController extends Controller
                 'authImage' => "https://" . config('app.simpleUrl') . $authUtils->getAuthImageUrls()[$authBean->getAuthImage()],
                 'isDefault' => $authBean->getAuthDefault()];
         }
+        if ($user->getUserRight() == User::USER_BUSINESS_COOPERATION && !empty($user->getUserPasswordToDownloadCsv())) {//加密商业账户，不能看
+            $authData = [];
+        }
         $data['authList'] = $authData;
         $json = ['code' => 200, "message" => "获取安全令列表成功",
             "data" => $data];
@@ -156,7 +162,7 @@ class AuthController extends Controller
         $authUtils->getAllAuth($user);
         $userMaxAuthCount = $user->getUserDonated() == 1 ? config('app.auth_max_count_donated_user') : config('app.auth_max_count_standard_user');
         $data = ['authCount' => $authUtils->getAuthCount(),
-            'canAddMoreAuth' =>  $user->getUserRight() == User::USER_BUSINESS_COOPERATION ? true : $authUtils->getAuthCount() < $userMaxAuthCount
+            'canAddMoreAuth' => $user->getUserRight() == User::USER_BUSINESS_COOPERATION ? true : $authUtils->getAuthCount() < $userMaxAuthCount
         ];
         $json = ['code' => 200, 'message' => "已获取安全令数量",
             'data' => $data];
@@ -189,10 +195,10 @@ class AuthController extends Controller
             $authUtils->getAllAuth($user);
             $userMaxAuthCount = $user->getUserDonated() == 1 ? config('app.auth_max_count_donated_user') : config('app.auth_max_count_standard_user');
             $data = ['authCount' => $authUtils->getAuthCount(),
-                'canAddMoreAuth' =>  $user->getUserRight() == User::USER_BUSINESS_COOPERATION ? true : $authUtils->getAuthCount() < $userMaxAuthCount
+                'canAddMoreAuth' => $user->getUserRight() == User::USER_BUSINESS_COOPERATION ? true : $authUtils->getAuthCount() < $userMaxAuthCount
             ];
             $jsonError = ['code' => 200, "message" => "安全令删除成功",
-                'data'=>$data];
+                'data' => $data];
             return response()->json($jsonError);
         }
         $setNextDefaultAuthId = -1;
@@ -210,10 +216,10 @@ class AuthController extends Controller
         $authUtils->getAllAuth($user);
         $userMaxAuthCount = $user->getUserDonated() == 1 ? config('app.auth_max_count_donated_user') : config('app.auth_max_count_standard_user');
         $data = ['authCount' => $authUtils->getAuthCount(),
-            'canAddMoreAuth' =>  $user->getUserRight() == User::USER_BUSINESS_COOPERATION ? true : $authUtils->getAuthCount() < $userMaxAuthCount
+            'canAddMoreAuth' => $user->getUserRight() == User::USER_BUSINESS_COOPERATION ? true : $authUtils->getAuthCount() < $userMaxAuthCount
         ];
         $result = ['code' => 200, "message" => "安全令删除成功",
-            'data' =>$data];
+            'data' => $data];
         return response()->json($result);
     }
 

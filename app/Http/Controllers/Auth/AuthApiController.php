@@ -203,7 +203,7 @@ class AuthApiController extends Controller
             return response()->json([
                 'code' => "@@@@@@",
                 'time' => 0,
-                'success'=>false
+                'success' => false
             ]);
         }
         if (strtoupper($authBean->getAuthRegion()) != "CN" && strtoupper($authBean->getAuthRegion()) != "EU") {
@@ -222,16 +222,66 @@ class AuthApiController extends Controller
             return response()->json([
                 'code' => $factoryAuth->code(),
                 'time' => $factoryAuth->sleeptime() / 1000,
-                'success'=>true
+                'success' => true
             ]);
         } catch (\Exception $e) {
             echo $e;
             return response()->json([
                 'code' => "@@@@@@",
                 'time' => 0,
-                'success'=>false
+                'success' => false
             ]);
         }
     }
 
+
+    public function getAllCode(Request $request)
+    {
+        $user = Auth::user();
+        $this->authUtils = new AuthUtils();
+        $this->authUtils->getAllAuth($user);
+        if ($this->authUtils->getAuthCount() < 1) {
+            return response()->json(['success' => false,'message'=>"没有安全令"]);
+        }
+        $authCodeList = array();
+        $authList = $this->authUtils->getAuthList();
+        $maxTime = 0;
+        for ($i = 0; $i < count($authList); $i++) {
+            /**
+             * @var AuthBean $authBean
+             */
+            $authBean = $authList[$i];
+            if (strtoupper($authBean->getAuthRegion()) != "CN" && strtoupper($authBean->getAuthRegion()) != "EU") {
+                $authBean->setAuthRegion("US");
+            }
+            $lastSyncTime = $this->authUtils->getAuthSyncInfo()->getSyncList()[strtoupper($authBean->getAuthRegion())][AuthSyncInfo::LAST_SYNC_TIME];
+            $serverTime = $this->authUtils->getAuthSyncInfo()->getSyncList()[strtoupper($authBean->getAuthRegion())][AuthSyncInfo::SYNC_SERVER_TIME];
+            $nowTimeStamp = time();
+            try {
+                if ($nowTimeStamp - strtotime($lastSyncTime) >= 86400) {
+                    $factoryAuth = Authenticator::factory($authBean->getAuthSerial(), $authBean->getAuthSecret());
+                    DBHelper::updateAuthSyncServerTime($factoryAuth->getsync(), $authBean->getAuthRegion(), date('Y-m-d H:i:s', $nowTimeStamp));
+                } else {
+                    $factoryAuth = Authenticator::factory($authBean->getAuthSerial(), $authBean->getAuthSecret(), $serverTime);
+                }
+                $maxTime = $maxTime < $factoryAuth->sleeptime() / 1000 ? $factoryAuth->sleeptime() / 1000 : $maxTime;
+                $item = [
+                    'authCode' => $factoryAuth->code(),
+                    'authId' => $authBean->getAuthId(),
+                    'authName' => $authBean->getAuthName(),
+                    'authImage' => "http://" . config('app.simpleUrl') . $this->authUtils->getAuthImageUrls()[$authBean->getAuthImage()],
+                    'isDefault' => $authBean->getAuthDefault()
+                ];
+                $authCodeList[] = $item;
+            } catch (\Exception $e) {
+                continue;
+            }
+        }
+        $result = [
+            'success' => true,
+            'authList' => $authCodeList,
+            'time' => $maxTime,
+        ];
+        return response()->json($result);
+    }
 }

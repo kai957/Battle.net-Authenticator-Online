@@ -1,0 +1,5 @@
+@include('universal.header.header_normal',["topNavValueText"=> "首页"])
+@include('auth.get.source.allJsAndCss')
+@include('universal.top.layoutTop')
+@include('auth.get.page.allInc')
+@include('universal.footer.bottom')

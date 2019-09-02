@@ -22,7 +22,7 @@
                     </li>
                 </ul>
             </div>
-            @if(@!$dbError)
+            @if((!isset($dbError) || !$dbError))
                 @if(@!empty($topNavValueText))
                     <div id="header" style="height:170px;clear: both;margin: 0;padding: 0;border: 0;outline: 0;">
                         <div id="toplogo" style="margin: 0;padding: 0;border: 0;outline: 0;">

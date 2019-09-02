@@ -29,7 +29,7 @@
                             <a href="/account" tabindex="100">账号</a>
                         </h3>
                         <ul>
-                            @if(@$dbError || !$_USER->getIsLogin())
+                            @if((isset($dbError) && $dbError) || !$_USER->getIsLogin())
                                 <li><a href='/forgetPassword'>忘记密码</a></li>
                                 <li><a href='/register'>注册账号</a></li>
                                 <li><a href='/login'>登入账号</a></li>
@@ -70,7 +70,7 @@
                         <span>建站时间: 2013年6月20日</span>
                         <span>安全运行: {{round((time() - strtotime("2013-06-20")) / 3600 / 24)}}天</span>
 
-                        @if(@!$dbError)
+                        @if(!isset($dbError) || !$dbError)
                             <span>用户总数: {{DBHelper::getUserCount()}}</span>
                             <span>令牌总数: {{DBHelper::getAuthCount()}}</span>
                         @else

@@ -2,7 +2,7 @@
 <body>
 <div id="{{$topLayoutId or 'layout-top'}}">
     <div id="topwrapper">
-        @if(@!$dbError && @$_USER->getIsLogin())
+        @if((!isset($dbError) || !$dbError) && @$_USER->getIsLogin())
             <div id="topnav">
                 <ul class="top-nav">
                     <li class="top-core top-home">
@@ -46,7 +46,7 @@
                 </ul>
             </div>
         @endif
-        @if(@!$dbError)
+        @if((!isset($dbError) || !$dbError))
             @if(@!empty($topNavValueText))
                 <div id="header" style="height:170px;">
                     <div id="toplogo">

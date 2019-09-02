@@ -14,3 +14,4 @@ npm-debug.log
 composer.phar
 /composer.lock
 /.svn
+/yarn.lock

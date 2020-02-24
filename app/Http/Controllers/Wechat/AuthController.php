@@ -188,7 +188,6 @@ class AuthController extends Controller
             $jsonError = ['code' => 403, "message" => "这枚安全令不属于你，你无权删除"];
             return response()->json($jsonError);
         }
-        DBHelper::backUpDeletedAuth($authBean);
         if (!($authBean->getAuthDefault()) || $authUtils->getAuthCount() == 1) {
             DBHelper::deleteAuth($authBean);
             $authUtils = new AuthUtils();

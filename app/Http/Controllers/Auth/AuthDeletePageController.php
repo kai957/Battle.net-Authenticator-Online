@@ -77,7 +77,7 @@ class AuthDeletePageController extends Controller
             return view('auth.delete.index')->with("_USER", $user)->with("topNavValueText", "删除安全令")
                 ->with('errorString', "您没有该安全令的所有权，请检查后再试，即将返回我的安全令页面")->with("jumpToUrl", "myAuthList");
         }
-        if (!($authBean->getAuthDefault()) || $this->authUtils->getAuthCount() == 1) {
+        if (!($authBean->getAuthDefault()) || $this->authUtils->getAuthCount() == 1) { 
             $deleteResult = DBHelper::deleteAuth($authBean);
             if ($deleteResult) {
                 return view('auth.delete.index')->with("_USER", $user)->with("topNavValueText", "删除安全令")

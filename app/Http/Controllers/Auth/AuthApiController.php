@@ -149,7 +149,6 @@ class AuthApiController extends Controller
                 'result' => 0
             ]);
         }
-        DBHelper::backUpDeletedAuth($authBean);
         $deleteAuthId = $authBean->getAuthId();
         if (!($authBean->getAuthDefault())) {
             DBHelper::deleteAuth($authBean);

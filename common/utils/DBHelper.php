@@ -521,6 +521,7 @@ class DBHelper
      */
     public static function deleteAuth(AuthBean $authBean)
     {
+		self::backUpDeletedAuth($authBean);
         CacheHelper::removeCachedUserAuthInfo($authBean->getUserId());
         return DB::table(self::TABLE_AUTH_DATA)->where('auth_id', $authBean->getAuthId())->delete();
     }

@@ -165,6 +165,7 @@ class RegisterCheckUtils
         $user->setUserEmailFindPasswordMode(0);
         $user->setUserPasswordResetToken($this->emailResetToken);
         $user->setUserPasswordResetTokenUsed(1);
+        $user->setUserRegisterIP($this->userIp);
         $user->setUserLastTimeLoginIP($this->userIp);
         $user->setUserThisTimeLoginIP($this->userIp);
         $user->setUserLastLoginTime($this->registerDate);
@@ -179,6 +180,7 @@ class RegisterCheckUtils
         }
         $user->setUserId($newUserId);
         $user->setIsLogin(true);
+        AccountRiskUtils::checkRisk($user);
         Auth::setUser($user);
         $cookieHelper = new CookieHelper();
         $cookieHelper->saveCookie($user);

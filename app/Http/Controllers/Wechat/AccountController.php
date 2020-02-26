@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Wechat;
 
 
+use AccountRiskUtils;
 use App\Http\Controllers\Controller;
 use App\User;
 use AuthUtils;
@@ -62,6 +63,7 @@ class AccountController extends Controller
             $json = ['code' => 500, 'message' => '服务器数据库错误'];
             return response()->json($json);
         }
+        AccountRiskUtils::checkRisk($user);
         $authUtils = new AuthUtils();
         $authUtils->getAllAuth($user);
         $userMaxAuthCount = $user->getUserDonated() == 1 ? config('app.auth_max_count_donated_user') : config('app.auth_max_count_standard_user');
@@ -146,6 +148,7 @@ class AccountController extends Controller
         $user->setUserEmailFindPasswordMode(0);
         $user->setUserPasswordResetToken(Functions::getRandomString());
         $user->setUserPasswordResetTokenUsed(1);
+        $user->setUserRegisterIP($ip);
         $user->setUserLastTimeLoginIP($ip);
         $user->setUserThisTimeLoginIP($ip);
         $user->setUserLastLoginTime($registerDate);
@@ -158,6 +161,7 @@ class AccountController extends Controller
             return response()->json($json);
         }
         $user->setUserId($newUserId);
+        AccountRiskUtils::checkRisk($user);
         MailSendUtils::sendRegisterSuccessEmail($user, $password, $wechatNickname);
         $json = ['code' => 200, 'message' => '注册成功，您的账号已与小程序绑定',
             'data' => ['hasAuth' => false,

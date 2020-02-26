@@ -27,6 +27,7 @@ class User extends Authenticatable
     private $userPasswordToDownloadCsv;//仅供商业合作用户，这个为空则没事，否则不能查看还原码，且下载csv需要先输入密码
     private $userEmail;
     private $userEmailChecked;
+    private $userRegisterIP;
     private $userRegisterTime;
     private $userQuestion;
     private $userAnswer;
@@ -42,6 +43,7 @@ class User extends Authenticatable
     private $lastUsedSessionTime;
     private $userDonated;
     private $lastResetPasswordTime;
+    private $wechatOpenID;
 
 
     public function getAccountRightString()
@@ -203,7 +205,14 @@ class User extends Authenticatable
         $this->wechatOpenID = $wechatOpenID;
     }
 
-    private $wechatOpenID;
+
+    /**
+     * @param mixed $userRegisterIP
+     */
+    public function setUserRegisterIP($userRegisterIP)
+    {
+        $this->userRegisterIP = $userRegisterIP;
+    }
 
     /**
      * @param mixed $userLastTimeLoginIP
@@ -311,10 +320,11 @@ class User extends Authenticatable
         $this->userName = $user->user_name;
         $this->userPass = $user->user_pass;
         $this->userRight = $user->user_right;
-        $this->userShowAllInIndex=$user->user_show_all_in_index;
-        $this->userPasswordToDownloadCsv=$user->user_auth_pass;
+        $this->userShowAllInIndex = $user->user_show_all_in_index;
+        $this->userPasswordToDownloadCsv = $user->user_auth_pass;
         $this->userEmail = $user->user_email;
         $this->userEmailChecked = $user->user_email_checked;
+        $this->userRegisterIP = $user->user_register_ip;
         $this->userRegisterTime = $user->user_register_time;
         $this->userQuestion = $user->user_question;
         $this->userAnswer = $user->user_answer;
@@ -451,6 +461,14 @@ class User extends Authenticatable
     public function getUserPasswordResetTokenUsed()
     {
         return $this->userPasswordResetTokenUsed;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserRegisterIP()
+    {
+        return $this->userRegisterIP;
     }
 
     /**

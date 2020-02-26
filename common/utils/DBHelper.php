@@ -230,6 +230,7 @@ class DBHelper
                 'user_email_find_password_mode' => $user->getUserEmailFindPasswordMode(),
                 'user_password_reset_token' => $user->getUserPasswordResetToken(),
                 'user_password_reset_token_used' => $user->getUserPasswordResetTokenUsed(),
+                'user_register_ip' => $user->getUserRegisterIP(),
                 'user_last_login_ip' => $user->getUserLastTimeLoginIP(),
                 'user_this_login_ip' => $user->getUserThisTimeLoginIP(),
                 'user_last_login_time' => $user->getUserLastLoginTime(),
@@ -521,7 +522,7 @@ class DBHelper
      */
     public static function deleteAuth(AuthBean $authBean)
     {
-		self::backUpDeletedAuth($authBean);
+        self::backUpDeletedAuth($authBean);
         CacheHelper::removeCachedUserAuthInfo($authBean->getUserId());
         return DB::table(self::TABLE_AUTH_DATA)->where('auth_id', $authBean->getAuthId())->delete();
     }

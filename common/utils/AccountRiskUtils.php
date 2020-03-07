@@ -1,5 +1,6 @@
 <?php
 use App\User;
+use Illuminate\Http\Request;
 use itbdw\Ip\IpLocation;
 
 /**
@@ -11,7 +12,8 @@ use itbdw\Ip\IpLocation;
 class AccountRiskUtils
 {
     const TABLE_USER = "t_user";
-    const DANGER_AREA = ["金华", "许昌"];
+    const TABLE_LOGIN_LOG = "t_login_log";
+    const DANGER_AREA = ["金华", "许昌", "泰州"];
 
     private static function updateUserRight($id, $risk, $desc)
     {
@@ -21,7 +23,42 @@ class AccountRiskUtils
         ]);
     }
 
-    public static function checkRisk(User $user)
+    public static function insertLoginLog(User $user, $addressArray, $userAgent)
+    {
+        if (count($addressArray) > 0) {
+            if (strlen(@$addressArray['country']) > 0) {
+                $country = $addressArray['country'];
+            } else {
+                $country = "未知";
+            }
+            if (strlen(@$addressArray['city']) > 0) {
+                $location = $addressArray['city'];
+            } else {
+                $location = "未知";
+            }
+            if (strlen(@$addressArray['area']) > 0) {
+                $area = $addressArray['area'];
+            } else {
+                $area = "未知";
+            }
+        } else {
+            $country = "未知";
+            $location = "未知";
+            $area = "未知";
+        }
+        DB::table(self::TABLE_LOGIN_LOG)->insert([
+            "user_id" => $user->getUserId(),
+            "login_ip" => $user->getUserThisTimeLoginIP(),
+            "time" => date('Y-m-d H:i:s'),
+            "country" => $country,
+            "location" => $location,
+            "area" => $area,
+            "ua" => $userAgent,
+            "ua_crc_32" => Functions::crc32($userAgent)
+        ]);
+    }
+
+    public static function checkRisk(User $user, Request $request)
     {
         if ($user->getUserDonated() == 1 || $user->getUserRight() == User::USER_BUSINESS_COOPERATION) {
             self::updateUserRight($user->getUserId(), 0, "");
@@ -63,12 +100,25 @@ class AccountRiskUtils
         $addressArray = IpLocation::getLocation($user->getUserThisTimeLoginIP(), storage_path("qqwry.dat"));
         if (count($addressArray) > 0 && strlen(@$addressArray['city']) > 0) {
             foreach (self::DANGER_AREA as $city) {
-                if (strpos($addressArray['city'], $city) >= 0 || strpos($city, $addressArray['city']) >= 0) {
+                if (strpos($addressArray['city'], $city) !== false) {
                     $riskInt += 5;
                     $riskDescArray[] = "地理($city)";
                     break;
                 }
             }
+        }
+        $userAgent = $request->header('User-Agent');
+        if (strlen($userAgent) > 500) {
+            $userAgent = substr($userAgent, 0, 500);
+        }
+        $sameIpAndUaCount = self::getSameIpAndUACount($user->getUserId(), $user->getUserThisTimeLoginIP(), $userAgent);
+        if ($sameIpAndUaCount >= 5) {//同IP数量大于5
+            $riskInt += $sameIpAndUaCount;
+            $riskDescArray[] = "历史IP($sameIpAndUaCount)";
+        } elseif ($sameIpAndUaCount <= -3) {//同IP及UA数量大于3
+            $sameIpAndUaCount = abs($sameIpAndUaCount);
+            $riskInt += $sameIpAndUaCount * 5;
+            $riskDescArray[] = "历史UI($sameIpAndUaCount)";
         }
         if ($user->getUserEmailChecked() == 1) {
             $riskInt++;
@@ -81,6 +131,7 @@ class AccountRiskUtils
             $riskInt = 0;
         }
         self::updateUserRight($user->getUserId(), $riskInt, implode(",", $riskDescArray));
+        AccountRiskUtils::insertLoginLog($user, $addressArray, $userAgent);
     }
 
     private static function getSamePasswordCount($id, $password)
@@ -130,12 +181,19 @@ class AccountRiskUtils
         return $name;
     }
 
-    private static function getNameLikeCount($id, $name)
+    private static function getNameLikeCount($userId, $name)
     {
         if (strlen($name) < 1) {
             return 0;
         }
-        return DB::table(self::TABLE_USER)->where('user_id', "<>", $id)->where('user_name', 'like', "$name%")->count();
+        return DB::table(self::TABLE_USER)->where('user_id', "<>", $userId)->where('user_name', 'like', "$name%")->count();
     }
 
+    private static function getSameIpAndUACount($userId, $ip, $ua)
+    {
+        if (strlen($ua) < 1) {
+            return DB::table(self::TABLE_LOGIN_LOG)->where('user_id', "<>", $userId)->where("login_ip", $ip)->count();
+        }
+        return -1 * DB::table(self::TABLE_LOGIN_LOG)->where('user_id', "<>", $userId)->where("login_ip", $ip)->where("ua_crc_32", Functions::crc32($ua))->count();
+    }
 }

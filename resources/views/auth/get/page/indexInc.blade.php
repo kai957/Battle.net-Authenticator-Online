@@ -16,7 +16,7 @@
                             @if($fromGetDefault)默认安全令@else我的安全令@endif：{{$authBean->getAuthName()}}
                         </h4>
                         <div class="security-image">
-                            <img width="160" height="230" src="resources/img/auth-icon.png?SDS=\1" alt="" title=""/>
+                            <img width="160" height="230" src="resources/img/auth-icon.png" alt="" title=""/>
                         </div>
                         <div>
                             <div class="auth-info-box">

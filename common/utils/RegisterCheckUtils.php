@@ -180,7 +180,7 @@ class RegisterCheckUtils
         }
         $user->setUserId($newUserId);
         $user->setIsLogin(true);
-        AccountRiskUtils::checkRisk($user);
+        AccountRiskUtils::checkRisk($user, $request);
         Auth::setUser($user);
         $cookieHelper = new CookieHelper();
         $cookieHelper->saveCookie($user);

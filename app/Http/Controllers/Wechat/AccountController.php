@@ -63,7 +63,7 @@ class AccountController extends Controller
             $json = ['code' => 500, 'message' => '服务器数据库错误'];
             return response()->json($json);
         }
-        AccountRiskUtils::checkRisk($user);
+        AccountRiskUtils::checkRisk($user, $request);
         $authUtils = new AuthUtils();
         $authUtils->getAllAuth($user);
         $userMaxAuthCount = $user->getUserDonated() == 1 ? config('app.auth_max_count_donated_user') : config('app.auth_max_count_standard_user');
@@ -126,10 +126,10 @@ class AccountController extends Controller
         }
         $wechatNickname = $request->json('wechatNickname');
         $user = Auth::user();
-        return $this->doRegister($user, $username, $password, $userEmail, $questionCode, $questionAnswer, $request->ip(), $wechatNickname);
+        return $this->doRegister($request, $user, $username, $password, $userEmail, $questionCode, $questionAnswer, $request->ip(), $wechatNickname);
     }
 
-    private function doRegister(User $user, $username, $password, $userEmail, $questionCode, $questionAnswer, $ip, $wechatNickname)
+    private function doRegister(Request $request, User $user, $username, $password, $userEmail, $questionCode, $questionAnswer, $ip, $wechatNickname)
     {
         $registerDate = date('Y-m-d H:i:s');
         $user->setWechatOpenID($user->getWechatTokenBean()->getWechatTokenOpenId());
@@ -161,7 +161,7 @@ class AccountController extends Controller
             return response()->json($json);
         }
         $user->setUserId($newUserId);
-        AccountRiskUtils::checkRisk($user);
+        AccountRiskUtils::checkRisk($user, $request);
         MailSendUtils::sendRegisterSuccessEmail($user, $password, $wechatNickname);
         $json = ['code' => 200, 'message' => '注册成功，您的账号已与小程序绑定',
             'data' => ['hasAuth' => false,

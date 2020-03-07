@@ -323,4 +323,10 @@ class Functions
     {
         return (preg_match("/^[A-Za-z0-9]+$/u", $restore) && strlen($restore) == 10);
     }
+
+
+    public static function crc32($str)
+    {
+            return sprintf("%u", crc32($str));
+    }
 }

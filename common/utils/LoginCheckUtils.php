@@ -86,7 +86,7 @@ class LoginCheckUtils
             $cookieHelper->saveCookie($user);
         }
         $request->session()->put(KeyConstant::SESSION_USERID, $user->getUserId());
-        AccountRiskUtils::checkRisk($user);
+        AccountRiskUtils::checkRisk($user, $request);
         return;
     }
 

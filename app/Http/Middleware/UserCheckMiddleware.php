@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use AccountRiskUtils;
 use Closure;
 use CookieBean;
 use Functions;
@@ -101,6 +102,7 @@ class UserCheckMiddleware
         $user->setUserThisLoginTime(date('Y-m-d H:i:s'));
         $user->setUserThisTimeLoginIP($request->ip());
         DBHelper::updateUserLastUseSessionTime($user);
+        AccountRiskUtils::checkRisk($user, $request);
     }
 
     function removeLoginState(Request $request, CookieHelper $cookieHelper)

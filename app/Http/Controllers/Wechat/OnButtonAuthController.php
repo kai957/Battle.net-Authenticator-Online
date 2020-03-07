@@ -93,18 +93,21 @@ class OnButtonAuthController extends Controller
             return response()->json($jsonError);
         }
         $requestJsonArray = json_decode($requestJson, true);
-        if ($requestJsonArray['callback_url'] != null && $requestJsonArray['session']['request_id'] != null &&
-            (time() - $requestJsonArray['session']['time_created_millis'] / 1000) < 150
-        ) {
-            $data = ['callbackUrl' => $requestJsonArray['callback_url'],
-                'requestId' => $requestJsonArray['session']['request_id'],
-                'authId' => $authBean->getAuthId(),
-                'message' => $requestJsonArray['message'],
-                'time' => ceil($requestJsonArray['session']['time_created_millis'] / 1000)
-            ];
-            $json = ['code' => 200, "message" => "已获取一键安全令请求",
-                'data' => $data];
-            return response()->json($json);
+        try {
+            if (@$requestJsonArray['callback_url'] != null && @$requestJsonArray['session']['request_id'] != null &&
+                (time() - @$requestJsonArray['session']['time_created_millis'] / 1000) < 150
+            ) {
+                $data = ['callbackUrl' => $requestJsonArray['callback_url'],
+                    'requestId' => $requestJsonArray['session']['request_id'],
+                    'authId' => $authBean->getAuthId(),
+                    'message' => $requestJsonArray['message'],
+                    'time' => ceil($requestJsonArray['session']['time_created_millis'] / 1000)
+                ];
+                $json = ['code' => 200, "message" => "已获取一键安全令请求",
+                    'data' => $data];
+                return response()->json($json);
+            }
+        } catch (\Exception $e) {
         }
         $jsonError = ['code' => 404, "message" => "无一键安全令请求"];
         return response()->json($jsonError);
@@ -146,7 +149,7 @@ class OnButtonAuthController extends Controller
         $authPlainSerial = $factoryAuth->plain_serial();
         $data = "serial=$authPlainSerial&code=$authCode&requestId={$requestId}&accept={$acceptMode}";
         Functions::_curlPost($callbackUrl, $data);
-        $json = ['code'=>200,"message"=> $acceptMode == "true" ? "已允许" : "已拒绝"];
+        $json = ['code' => 200, "message" => $acceptMode == "true" ? "已允许" : "已拒绝"];
         return response()->json($json);
     }
 }

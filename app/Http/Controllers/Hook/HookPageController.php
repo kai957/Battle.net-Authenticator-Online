@@ -6,15 +6,14 @@
  * Time: 下午 12:11
  */
 
-namespace App\Http\Controllers\Account;
+namespace App\Http\Controllers\Hook;
 
 use App\Http\Controllers\Controller;
 use App\User;
-use AuthUtils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AccountPageController extends Controller
+class HookPageController extends Controller
 {
 
 
@@ -28,12 +27,14 @@ class AccountPageController extends Controller
         /** @var User $user */
         $user = Auth::user();
         if (!$user->getIsLogin()) {
-            $encodeUrl = urlencode(base64_encode("account"));
-            $encodeName = urlencode(base64_encode("账号管理"));
+            $encodeUrl = urlencode(base64_encode("hookLog"));
+            $encodeName = urlencode(base64_encode("挂机日志"));
             return redirect("login?from=$encodeUrl&fromName=$encodeName");
         }
-        $authUtils = new AuthUtils();
-        $authUtils->getAllAuth($user);
-        return view('account.account.index')->with('_USER', $user)->with("topNavValueText", "账号管理")->with("authUtils", $authUtils);
+        if (!$user->getUserHasHookRight()) {
+            return redirect("");
+        }
+        $hookLog = \DBHelper::getHookLog($user);
+        return view('hook.index')->with('_USER', $user)->with("topNavValueText", "挂机日志")->with("hookLog", $hookLog);
     }
 }

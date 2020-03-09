@@ -11,7 +11,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\User;
-use AuthBean;
 use Authenticator;
 use AuthSyncInfo;
 use AuthUtils;
@@ -25,6 +24,9 @@ use Illuminate\Support\Facades\Auth;
 class AuthAddTaskController extends Controller
 {
     private $standardRegion;
+    /**
+     * @var AuthUtils
+     */
     private $authUtils;
     private $postAuthName;
     private $postRegion;
@@ -114,6 +116,7 @@ class AuthAddTaskController extends Controller
 
     public function addByServer(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $checkCanAdd = self::checkCanAdd($request, $user);
         if ($checkCanAdd !== true) {
@@ -151,6 +154,7 @@ class AuthAddTaskController extends Controller
 
     public function addBySecret(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $checkCanAdd = self::checkCanAdd($request, $user);
         if ($checkCanAdd !== true) {
@@ -200,6 +204,7 @@ class AuthAddTaskController extends Controller
 
     public function addByRestoreCode(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $checkCanAdd = self::checkCanAdd($request, $user);
         if ($checkCanAdd !== true) {

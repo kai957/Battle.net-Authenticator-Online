@@ -16,7 +16,7 @@ class DBErrorPageController extends Controller
 
     public function dbError()
     {
-        $topNavValueText="数据库错误";
-        return response(view('static.errors.dbError')->with('topNavValueText',$topNavValueText));
+        $topNavValueText = "数据库错误";
+        return response(view('static.errors.dbError')->with('topNavValueText', $topNavValueText));
     }
 }

@@ -47,7 +47,7 @@ class WechatTokenBean
         if (empty($tokenValue)) {
             return;
         }
-        $json = json_decode($tokenValue,true);
+        $json = json_decode($tokenValue, true);
         $this->wechatTokenSessionKey = $json['sessionKey'];
         $this->wechatTokenOpenId = $json['openId'];
         if (!empty($this->wechatTokenOpenId) && !empty($this->wechatTokenSessionKey)) {

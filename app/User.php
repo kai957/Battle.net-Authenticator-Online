@@ -44,6 +44,9 @@ class User extends Authenticatable
     private $userDonated;
     private $lastResetPasswordTime;
     private $wechatOpenID;
+    private $userHasHookRight;//是否有控制挂机权限
+    private $userHookEnable;//是否控制客户端自动挂机
+    private $userHookLastUpdateTime;//客户端上次同步时间
 
 
     public function getAccountRightString()
@@ -262,6 +265,29 @@ class User extends Authenticatable
         $this->isLogin = $isLogin;
     }
 
+    /**
+     * @param mixed $userHasHookRight
+     */
+    public function setUserHasHookRight($userHasHookRight)
+    {
+        $this->userHasHookRight = $userHasHookRight;
+    }
+
+    /**
+     * @param mixed $userHookEnable
+     */
+    public function setUserHookEnable($userHookEnable)
+    {
+        $this->userHookEnable = $userHookEnable;
+    }
+ 
+    /**
+     * @param mixed $userHookLastUpdateTime
+     */
+    public function setUserHookLastUpdateTime($userHookLastUpdateTime)
+    {
+        $this->userHookLastUpdateTime = $userHookLastUpdateTime;
+    }
 
     public function initUserByNameAndPassword($userName, $userPass)
     {
@@ -341,6 +367,9 @@ class User extends Authenticatable
         $this->userDonated = $user->user_donated;
         $this->wechatOpenID = $user->user_wechat_openid;
         $this->lastResetPasswordTime = $user->user_last_reset_password_time;
+        $this->userHasHookRight = $user->user_hook == 1;
+        $this->userHookEnable = $user->user_hook_mode == 1;
+        $this->userHookLastUpdateTime = $user->user_hook_last_update;
     }
 
     /**
@@ -569,5 +598,29 @@ class User extends Authenticatable
         return $this->userPasswordToDownloadCsv;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getUserHasHookRight()
+    {
+        return $this->userHasHookRight;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserHookEnable()
+    {
+        return $this->userHookEnable;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getUserHookLastUpdateTime()
+    {
+        return $this->userHookLastUpdateTime;
+    }
 
 }

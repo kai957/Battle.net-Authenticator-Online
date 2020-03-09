@@ -5,22 +5,21 @@ namespace App\Http\Controllers\Wechat;
 
 use App\Http\Controllers\Controller;
 use App\User;
-use AuthBean;
 use Authenticator;
 use AuthSyncInfo;
 use AuthUtils;
 use DBHelper;
 use Functions;
-use HttpFormConstant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use RedisHelper;
-use WechatTokenBean;
 
 class AuthAddController extends Controller
 {
 
     private $standardRegion;
+    /**
+     * @var AuthUtils
+     */
     private $authUtils;
     private $postAuthName;
     private $postRegion;
@@ -77,6 +76,7 @@ class AuthAddController extends Controller
 
     public function byServer(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $checkResult = $this->checkCanAdd($request, $user);
         if ($checkResult !== true) {
@@ -108,7 +108,7 @@ class AuthAddController extends Controller
                 'data' => [
                     'authId' => $newAuthId,
                     'isDefault' => $setDefault,
-                    'canAddMoreAuth' =>  $user->getUserRight() == User::USER_BUSINESS_COOPERATION ? true : $authUtils->getAuthCount() < $userMaxAuthCount,
+                    'canAddMoreAuth' => $user->getUserRight() == User::USER_BUSINESS_COOPERATION ? true : $authUtils->getAuthCount() < $userMaxAuthCount,
                     'authCount' => $authUtils->getAuthCount()
                 ]
             ];
@@ -120,6 +120,7 @@ class AuthAddController extends Controller
 
     public function authAddByRestoreCode(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $checkCanAdd = self::checkCanAdd($request, $user);
         if ($checkCanAdd !== true) {
@@ -169,7 +170,7 @@ class AuthAddController extends Controller
                 'data' => [
                     'authId' => $newAuthId,
                     'isDefault' => $setDefault,
-                    'canAddMoreAuth' =>  $user->getUserRight() == User::USER_BUSINESS_COOPERATION ? true : $authUtils->getAuthCount() < $userMaxAuthCount,
+                    'canAddMoreAuth' => $user->getUserRight() == User::USER_BUSINESS_COOPERATION ? true : $authUtils->getAuthCount() < $userMaxAuthCount,
                     'authCount' => $authUtils->getAuthCount()]
             ];
             return response()->json($json);

@@ -21,6 +21,9 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthDeletePageController extends Controller
 {
+    /**
+     * @var AuthUtils
+     */
     private $authUtils;
 
     function __construct()
@@ -53,6 +56,7 @@ class AuthDeletePageController extends Controller
     public function get(Request $request)
     {
         $authId = $request->input(HttpFormConstant::FORM_KEY_AUTH_ID);
+        /** @var User $user */
         $user = Auth::user();
         if (!$user->getIsLogin()) {//未登录，跳登录
             if (!empty($authId) && Functions::isInt($authId)) {
@@ -77,7 +81,7 @@ class AuthDeletePageController extends Controller
             return view('auth.delete.index')->with("_USER", $user)->with("topNavValueText", "删除安全令")
                 ->with('errorString', "您没有该安全令的所有权，请检查后再试，即将返回我的安全令页面")->with("jumpToUrl", "myAuthList");
         }
-        if (!($authBean->getAuthDefault()) || $this->authUtils->getAuthCount() == 1) { 
+        if (!($authBean->getAuthDefault()) || $this->authUtils->getAuthCount() == 1) {
             $deleteResult = DBHelper::deleteAuth($authBean);
             if ($deleteResult) {
                 return view('auth.delete.index')->with("_USER", $user)->with("topNavValueText", "删除安全令")
@@ -95,7 +99,7 @@ class AuthDeletePageController extends Controller
         }
         $deleteResult = DBHelper::deleteAuth($authBean);
         if ($deleteResult) {
-            $deleteResult = DBHelper::updateAuthSetDefault($user->getUserId(), $setNextDefaultAuthId);
+            DBHelper::updateAuthSetDefault($user->getUserId(), $setNextDefaultAuthId);
             return view('auth.delete.index')->with("_USER", $user)->with("topNavValueText", "删除安全令")
                 ->with('errorString', "删除成功，如为误删，请联系管理员找回，即将返回我的安全令页面")->with("jumpToUrl", "myAuthList");
         }

@@ -9,12 +9,10 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
-use KeyConstant;
-use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use LoginCheckUtils;
-use RegisterCheckUtils;
 
 
 class LoginPageController extends Controller
@@ -28,6 +26,7 @@ class LoginPageController extends Controller
 
     function iframeGet(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         if ($user->getIsLogin()) {
             return view('account.iframeLogin.logined')->with("_USER", $user)->with("topNavValueText", "登入");
@@ -39,6 +38,7 @@ class LoginPageController extends Controller
 
     function iframePost(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         if ($user->getIsLogin()) {
             return view('account.iframeLogin.logined')->with("_USER", $user)->with("topNavValueText", "登入");
@@ -59,6 +59,7 @@ class LoginPageController extends Controller
 
     function normalGet(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         if ($user->getIsLogin()) {
             return view('account.login.logined')->with("_USER", $user)->with("topNavValueText", "登入");
@@ -72,6 +73,7 @@ class LoginPageController extends Controller
 
     function normalPost(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         if ($user->getIsLogin()) {
             return view('account.login.logined')->with("_USER", $user)->with("topNavValueText", "登入");
@@ -82,7 +84,7 @@ class LoginPageController extends Controller
         if ($loginCheckUtils->getLoginErrorCode() == 0) {
             return view('account.login.success')->with("_USER", $user)->with("topNavValueText", "登入成功")
                 ->with('from', base64_decode($request->input('from', "")))
-                ->with('fromName', base64_decode($request->input('fromName',base64_encode("首页"))));
+                ->with('fromName', base64_decode($request->input('fromName', base64_encode("首页"))));
         }
         if ($loginCheckUtils->getLoginErrorCode() == -1) {
             return view('account.login.lowRight')->with("_USER", $user)->with("topNavValueText", "共享账号等待登录");

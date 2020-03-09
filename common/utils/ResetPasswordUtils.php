@@ -147,7 +147,7 @@ class ResetPasswordUtils
             $cookieHelper->removeSavedCookie();
             $cookieHelper->removeCookie();
         }
-        MailSendUtils::sendResetPasswordEmail($this->user,$this->newPassword);
+        MailSendUtils::sendResetPasswordEmail($this->user, $this->newPassword);
         $this->resetPasswordErrorCode = 0;
     }
 

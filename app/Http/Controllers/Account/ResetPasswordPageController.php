@@ -9,12 +9,9 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
-use ChangePasswordUtils;
-use KeyConstant;
-use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use RegisterCheckUtils;
 use ResetPasswordUtils;
 
 
@@ -29,6 +26,7 @@ class ResetPasswordPageController extends Controller
 
     function get(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $resetPasswordUtils = new ResetPasswordUtils($request);
         $resetPasswordUtils->doGetCheck();

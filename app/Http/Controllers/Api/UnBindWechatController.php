@@ -12,11 +12,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\User;
 use DBHelper;
-use Functions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
-use KeyConstant;
 
 class UnBindWechatController extends Controller
 {
@@ -28,6 +25,7 @@ class UnBindWechatController extends Controller
 
     public function get(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         if (!$user->getIsLogin()) {
             return response("false");

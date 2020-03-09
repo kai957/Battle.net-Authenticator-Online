@@ -27,7 +27,7 @@ class CaptchaCodeImageController extends Controller
     {
         $phrase = new PhraseBuilder();
         $possibleLetters = '23456789bcdfghjkmnpqrstvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
-        $code = $phrase->build(6,$possibleLetters);
+        $code = $phrase->build(6, $possibleLetters);
         $builder = new CaptchaBuilder($code, $phrase);
         $builder->setMaxAngle(15);
         $builder->setMaxBehindLines(2);

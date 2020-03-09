@@ -9,6 +9,7 @@ class DBHelper
     const TABLE_DELETED_AUTH_DATA = "t_deleted_auth";
     const TABLE_DONATE_DATA = "t_donate";
     const TABLE_SYNCTIME_DATA = "t_sync_time";
+    const TABLE_HOOK_LOG = "t_hook_log";
 
     /**
      * 获取用户数量
@@ -95,7 +96,6 @@ class DBHelper
     /**
      * 使用用户名及ID查找用户
      * @param $userName
-     * @param $userId
      * @return mixed
      */
     public static function getUserByUserName($userName)
@@ -587,6 +587,61 @@ class DBHelper
                 'donate_count' => $donateCount
             ]
         );
+    }
+
+    /**
+     * 修改用户挂机配置
+     * @param User $user
+     * @param bool $enable
+     */
+    public static function updateUserHookMode(User $user, $enable)
+    {
+        CacheHelper::removeCachedUserInfo($user->getUserId());
+        DB::table(self::TABLE_USER)->where('user_id', $user->getUserId())->update(['user_hook_mode' => $enable ? 1 : 0]);
+    }
+
+    /**
+     * 写入挂机日志
+     * @param User $user
+     * @param $time
+     * @param $detail
+     */
+    public static function insertHookLog(User $user, $time, $detail)
+    {
+        if (strlen(trim($detail)) < 1) {
+            return;
+        }
+        if (strlen($detail) > 1000) {
+            $detail = substr($detail, 0, 1000);
+        }
+        DB::table(self::TABLE_HOOK_LOG)->insert([
+            "user_id" => $user->getUserId(),
+            "time" => $time,
+            "detail" => $detail
+        ]);
+    }
+
+    /**
+     * 获取挂机日志
+     * @param User $user
+     * @return []
+     */
+    public static function getHookLog(User $user)
+    {
+        return DB::table(self::TABLE_HOOK_LOG)
+            ->where("user_id", $user->getUserId())
+            ->orderBy("time", "desc")->limit(200)->get();
+    }
+
+
+    /**
+     * 更新用户挂机同步时间
+     * @param User $user
+     */
+    public static function updateUserHookLastUpdateTime(User $user)
+    {
+        CacheHelper::removeCachedUserInfo($user->getUserId());
+        DB::table(self::TABLE_USER)->where('user_id', $user->getUserId())->update(['user_hook_last_update' => date("Y-m-d H:i:s")]);
     }
 
 

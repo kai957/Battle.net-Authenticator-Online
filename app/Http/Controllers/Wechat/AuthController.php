@@ -13,8 +13,6 @@ use DBHelper;
 use Functions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use RedisHelper;
-use WechatTokenBean;
 
 class AuthController extends Controller
 {
@@ -26,6 +24,7 @@ class AuthController extends Controller
 
     public function getAuthInfo(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $authUtils = new AuthUtils();
         $authUtils->getAllAuth($user);
@@ -68,6 +67,7 @@ class AuthController extends Controller
 
     public function getAuthDynamicCode(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $authUtils = new AuthUtils();
         $authUtils->getAllAuth($user);
@@ -114,6 +114,7 @@ class AuthController extends Controller
 
     public function getAuthList(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $authUtils = new AuthUtils();
         $authUtils->getAllAuth($user);
@@ -157,6 +158,7 @@ class AuthController extends Controller
 
     public function getAuthCount(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $authUtils = new AuthUtils();
         $authUtils->getAllAuth($user);
@@ -171,6 +173,7 @@ class AuthController extends Controller
 
     public function deleteAuth(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $authUtils = new AuthUtils();
         $authUtils->getAllAuth($user);
@@ -224,6 +227,7 @@ class AuthController extends Controller
 
     public function authChangeName(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $authUtils = new AuthUtils();
         $authUtils->getAllAuth($user);
@@ -257,6 +261,7 @@ class AuthController extends Controller
 
     public function authSetDefault(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $authUtils = new AuthUtils();
         $authUtils->getAllAuth($user);
@@ -287,6 +292,7 @@ class AuthController extends Controller
 
     public function authSyncTime(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $authUtils = new AuthUtils();
         $authUtils->getAllAuth($user);

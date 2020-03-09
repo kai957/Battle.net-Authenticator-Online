@@ -60,7 +60,7 @@ class AccountRiskUtils
 
     public static function checkRisk(User $user, Request $request)
     {
-        if ($user->getUserDonated() == 1 || $user->getUserRight() == User::USER_BUSINESS_COOPERATION) {
+        if ($user->getUserDonated() == 1 || $user->getUserHasHookRight() == 1 || $user->getUserRight() == User::USER_BUSINESS_COOPERATION) {
             self::updateUserRight($user->getUserId(), 0, "");
             return;
         }
@@ -120,7 +120,7 @@ class AccountRiskUtils
             $riskInt += $sameIpAndUaCount * 5;
             $riskDescArray[] = "历史UI($sameIpAndUaCount)";
         }
-        if ($user->getUserEmailChecked() == 1) {
+        if ($user->getUserEmailChecked() == 0) {
             $riskInt++;
             $riskDescArray[] = "邮箱未验证";
         }

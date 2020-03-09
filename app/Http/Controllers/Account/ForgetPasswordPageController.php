@@ -9,13 +9,10 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
-use ChangePasswordUtils;
-use ForgetPasswordCheckUtils;
-use KeyConstant;
-use Illuminate\Http\Request;
 use App\User;
+use ForgetPasswordCheckUtils;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use RegisterCheckUtils;
 
 
 class ForgetPasswordPageController extends Controller
@@ -29,6 +26,7 @@ class ForgetPasswordPageController extends Controller
 
     function get(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $forgetPasswordCheckUtils = new ForgetPasswordCheckUtils($request);
         return view('account.forgetPassword.index')->with('_USER', $user)->with("topNavValueText", "无法登入？")
@@ -39,6 +37,7 @@ class ForgetPasswordPageController extends Controller
     {
         $forgetPasswordCheckUtils = new ForgetPasswordCheckUtils($request);
         $forgetPasswordCheckUtils->doCheck($request);
+        /** @var User $user */
         $user = Auth::user();
         if ($forgetPasswordCheckUtils->getForgetPasswordCheckErrorCode() == 0) {
             return view('account.forgetPassword.success')->with('_USER', $user)->with("topNavValueText", "无法登入？")

@@ -3,16 +3,14 @@
 namespace App\Http\Middleware;
 
 use AccountRiskUtils;
+use App\User;
 use Closure;
-use CookieBean;
+use CookieHelper;
+use DBHelper;
 use Functions;
 use Illuminate\Http\Request as Request;
 use Illuminate\Support\Facades\Auth;
 use KeyConstant;
-use App\User;
-use DBHelper;
-use CookieHelper;
-use RedisHelper;
 
 class UserCheckMiddleware
 {

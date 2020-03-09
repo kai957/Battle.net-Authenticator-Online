@@ -16,7 +16,8 @@ class CaptchaUtils
         return $result;
     }
 
-    public function refreshCaptchaCode(){
+    public function refreshCaptchaCode()
+    {
         Session::put(KeyConstant::SESSION_CAPTCHA, Functions::getRandomString());
     }
 }

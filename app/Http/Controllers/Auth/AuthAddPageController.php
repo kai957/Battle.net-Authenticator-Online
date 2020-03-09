@@ -30,6 +30,7 @@ class AuthAddPageController extends Controller
      */
     public function get(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         if (!$user->getIsLogin()) {//未登录，跳登录
             $encodeUrl = urlencode(base64_encode("addAuth"));
@@ -38,7 +39,7 @@ class AuthAddPageController extends Controller
         }
         $authUtils = new AuthUtils();
         $authUtils->getAllAuth($user);
-        if($user->getUserRight() != User::USER_BUSINESS_COOPERATION) {
+        if ($user->getUserRight() != User::USER_BUSINESS_COOPERATION) {
             if ($user->getUserDonated() == 1 && $authUtils->getAuthCount() >= config('app.auth_max_count_donated_user')) {
                 return view('auth.add.error')->with('_USER', $user)->with("topNavValueText", "添加安全令")
                     ->with("errorString", "您已经拥有" . $authUtils->getAuthCount() . "枚安全令，已到捐赠者账号的最大添加数量")

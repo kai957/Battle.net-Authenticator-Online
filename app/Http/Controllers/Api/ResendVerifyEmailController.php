@@ -10,6 +10,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use ResendVerifyEmailUtils;
@@ -23,6 +24,7 @@ class ResendVerifyEmailController extends Controller
 
     public function reSendEmail(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         try {
             $resendVerifyEmail = new ResendVerifyEmailUtils($user);

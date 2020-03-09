@@ -7,15 +7,12 @@ use AccountRiskUtils;
 use App\Http\Controllers\Controller;
 use App\User;
 use AuthUtils;
-use CaptchaUtils;
 use DBHelper;
 use Functions;
 use HttpFormConstant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use MailSendUtils;
-use RedisHelper;
-use WechatTokenBean;
 
 class AccountController extends Controller
 {
@@ -27,6 +24,7 @@ class AccountController extends Controller
 
     public function bind(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         if (!empty($user->getUserId()) && Functions::isInt($user->getUserId())) {
             $json = ['code' => 403, 'message' => "您的微信已有绑定，如要绑定其他账号，请先取消绑定"];
@@ -80,6 +78,7 @@ class AccountController extends Controller
 
     public function register(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         if (!empty($user->getUserId()) && Functions::isInt($user->getUserId())) {
             $json = ['code' => 403, 'message' => "您的微信已有绑定，如要注册其他账号，请先取消绑定"];
@@ -125,6 +124,7 @@ class AccountController extends Controller
             return response()->json($json);
         }
         $wechatNickname = $request->json('wechatNickname');
+        /** @var User $user */
         $user = Auth::user();
         return $this->doRegister($request, $user, $username, $password, $userEmail, $questionCode, $questionAnswer, $request->ip(), $wechatNickname);
     }

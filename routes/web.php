@@ -60,7 +60,7 @@ Route::get('account', 'Account\AccountPageController@get');
 #验证数据相关API
 Route::get("api/captchaCode", 'Api\CaptchaCodeImageController@captcha');
 Route::get("api/check/checkUserName", 'Api\CheckController@checkUserName');
-Route::get("api/check/checkCpatcha", 'Api\CheckController@checkCpatcha');
+Route::get("api/check/checkCaptcha", 'Api\CheckController@checkCaptcha');
 Route::get("api/resendVerifyEmail", 'Api\ResendVerifyEmailController@reSendEmail');
 
 #账户API
@@ -105,5 +105,11 @@ Route::post('api/wechat/authDelete', 'Wechat\AuthController@deleteAuth');//删�
 Route::post('api/wechat/authChangeName', 'Wechat\AuthController@authChangeName');//改名
 Route::post('api/wechat/authSetDefault', 'Wechat\AuthController@authSetDefault');//设置默认
 Route::post('api/wechat/authSyncTime', 'Wechat\AuthController@authSyncTime');//校对时间
-Route::post('api/wechat/getOneButtonAuthRequestInfo','Wechat\OnButtonAuthController@getRequestInfo');//获取战网端一键安全令信息
-Route::post('api/wechat/commitOneKeyButtonAuthResponse','Wechat\OnButtonAuthController@commit');//获取战网端一键安全令信息
+Route::post('api/wechat/getOneButtonAuthRequestInfo','Wechat\OneButtonAuthController@getRequestInfo');//获取战网端一键安全令信息
+Route::post('api/wechat/commitOneKeyButtonAuthResponse','Wechat\OneButtonAuthController@commit');//获取战网端一键安全令信息
+
+#挂机软件相关
+Route::get('api/hook/getStatus',"Hook\HookStatusController@get");//获取挂机状态
+Route::get('api/hook/updateStatus',"Hook\HookStatusController@update");//更新挂机状态
+Route::post('api/hook/log',"Hook\HookLogController@insert");//插入挂机日志
+Route::any('hookLog', 'Hook\HookPageController@get');//挂机日志

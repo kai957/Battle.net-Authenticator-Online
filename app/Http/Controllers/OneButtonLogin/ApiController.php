@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ApiController extends Controller
 {
+    /** @var AuthUtils $user */
     private $authUtils;
 
     function __construct()
@@ -94,6 +95,7 @@ class ApiController extends Controller
     public function getRequestInfo(Request $request)
     {
         set_time_limit(10);
+        /** @var User $user */
         $user = Auth::user();
         $authBean = self::isAuthValidAndBelongToUser($request, $user);
         if ($authBean === false) {
@@ -145,6 +147,7 @@ class ApiController extends Controller
 
     public function commitPost(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         if (!$user->getIsLogin()) {
             return response()->json(['code' => 0, 'message' => '未登录']);

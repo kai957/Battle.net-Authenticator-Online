@@ -77,6 +77,7 @@ class ForgetPasswordCheckUtils
         $emailFindCode = Functions::getRandomString();
         $user->setUserEmailFindPasswordToken($emailFindCode);
         $user->setUserEmailFindPasswordMode(1);
+        /** @var User $_USER */
         $_USER = Auth::user();
         if ($_USER->getIsLogin() && $_USER->getUserId() == $user->getUserId()) {
             $_USER->setUserEmailFindPasswordToken($emailFindCode);

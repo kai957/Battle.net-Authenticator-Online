@@ -159,9 +159,8 @@ class Functions
 
     /**
      * 校验提交的密码，与时间的关系型
-     * @param $username
+     * @param User $user
      * @param $password
-     * @param null $user
      * @return string 解密的密码
      */
     public static function checkPostUserNameAndPasswordHasUser(User $user, $password)
@@ -327,6 +326,6 @@ class Functions
 
     public static function crc32($str)
     {
-            return sprintf("%u", crc32($str));
+        return sprintf("%u", crc32($str));
     }
 }

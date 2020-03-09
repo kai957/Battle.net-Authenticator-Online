@@ -1,7 +1,6 @@
 <?php
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * Created by PhpStorm.

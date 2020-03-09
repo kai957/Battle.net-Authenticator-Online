@@ -6,11 +6,8 @@ namespace App\Http\Controllers\Wechat;
 use App\Http\Controllers\Controller;
 use App\User;
 use DBHelper;
-use Functions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use RedisHelper;
-use WechatTokenBean;
 
 class UnBindController extends Controller
 {
@@ -22,6 +19,7 @@ class UnBindController extends Controller
 
     public function unBind(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $result = DBHelper::updateUserUnBindWechatOpenId($user);
 

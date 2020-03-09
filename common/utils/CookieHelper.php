@@ -14,7 +14,6 @@ class CookieHelper
 {
     /**
      * 将Cookie输出到浏览器
-     * @param $userName
      * @param $cookieValue
      * @param int $ttl
      */

@@ -8,10 +8,8 @@
 
 namespace App\Http\Controllers;
 
-use AuthUtils;
-use KeyConstant;
-use Illuminate\Http\Request;
 use App\User;
+use AuthUtils;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -26,6 +24,7 @@ class IndexPageController extends Controller
 
     function __invoke()
     {
+        /** @var User $user */
         $user = Auth::user();
         if (!$user->getIsLogin()) {
             return view('static.index.noLogin')->with('_USER', $user)->with("topNavValueText", "首页");
@@ -47,6 +46,6 @@ class IndexPageController extends Controller
         $maxAuthCount = $user->getUserDonated() == 1 ? config('app.auth_max_count_donated_user') : config('app.auth_max_count_standard_user');
         return view('static.index.add')->with("_USER", $user)->with("topNavValueText", "添加安全令")
             ->with("authUtils", $authUtils)->with('authBean', $authUtils->getDefaultAuth())
-            ->with("captchaCodeUnix", $captchaCodeUnix)->with("maxAuthCount", $maxAuthCount);;
+            ->with("captchaCodeUnix", $captchaCodeUnix)->with("maxAuthCount", $maxAuthCount);
     }
 }

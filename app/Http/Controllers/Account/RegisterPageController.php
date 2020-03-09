@@ -9,9 +9,8 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
-use KeyConstant;
-use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RegisterCheckUtils;
 
@@ -27,6 +26,7 @@ class RegisterPageController extends Controller
 
     function get(Request $request)
     {//GET不可能提交数据的
+        /** @var User $user */
         $user = Auth::user();
         if ($user->getIsLogin()) {
             return view('account.register.logined')->with('_USER', $user)->with("topNavValueText", "注册");
@@ -36,6 +36,7 @@ class RegisterPageController extends Controller
 
     function post(Request $request)
     {//POST可能是提交数据的模式，所以判断是否是刚注册成功，是的话跳正确，否则跳失败
+        /** @var User $user */
         $user = Auth::user();
         if ($user->getIsLogin()) {
             return view('account.register.logined')->with('_USER', $user)->with("topNavValueText", "注册");
@@ -47,13 +48,14 @@ class RegisterPageController extends Controller
                 ->with("registerErrorInfo", $registerCheckUtils->getErrorString($registerCheckUtils->getRegisterErrorCode()));
         }
         $registerCheckUtils->doRegister($request);
+        /** @var User $user */
         $user = Auth::user();
         if ($registerCheckUtils->getRegisterErrorCode() > 0) {
             return view('account.register.index')->with('_USER', $user)
                 ->with("topNavValueText", "注册")
                 ->with("registerErrorInfo", $registerCheckUtils->getErrorString($registerCheckUtils->getRegisterErrorCode()));
         }
-        return view('account.register.success')->with('_USER',$user)
+        return view('account.register.success')->with('_USER', $user)
             ->with("topNavValueText", "注册");
     }
 }

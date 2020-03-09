@@ -13,6 +13,7 @@ class VerifyCsrfToken extends BaseVerifier
      */
     protected $except = [
         'api/oneButtonAuth/commit',
-        'api/wechat/*'
+        'api/wechat/*',
+        'api/hook/log'
     ];
 }

@@ -38,9 +38,30 @@
                                                              onclick="unBindWechat();"> 解除绑定 </a>]</span>
             @endif
         </p>
+        @if($_USER->getUserHasHookRight())
+            <h4 class="subcategory">自动登号模式状态 [<a style="cursor:pointer;"
+                                                 href="/hookLog">查看日志</a>]</h4>
+            <p id="hookModeInfo">
+                @if($_USER->getUserHookEnable())
+                    启用中  <span id="HookModeSetter" class="edit">[<a style="cursor:pointer;"
+                                                                    onclick="setHookMode(false);"> 禁用 </a>]</span>
+                @else
+                    禁用中 <span id="HookModeSetter" class="edit">[<a style="cursor:pointer;"
+                                                                   onclick="setHookMode(true);"> 启用 </a>]</span>
+                @endif
+            </p>
+            <h4 class="subcategory">自动登号同步时间</h4>
+            <p id="hookModeInfo">
+                @if($_USER->getUserHookLastUpdateTime() == null || strlen($_USER->getUserHookLastUpdateTime()) < 1)
+                    从未
+                @else
+                    {{date('Y年m月d日 H:i:s',strtotime($_USER->getUserHookLastUpdateTime()))}}
+                @endif
+            </p>
+        @endif
         <h4 class="subcategory">上次登录时间</h4>
         <p>
-            {{date('Y年m月d日 H:m:s',strtotime($_USER->getUserLastLoginTime()))}}
+            {{date('Y年m月d日 H:i:s',strtotime($_USER->getUserLastLoginTime()))}}
         </p>
         <h4 class="subcategory">上次登录IP地址</h4>
         <p id="lastLoginIpAddress">

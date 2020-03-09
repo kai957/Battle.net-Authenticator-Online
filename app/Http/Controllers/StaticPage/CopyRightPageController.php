@@ -22,6 +22,6 @@ class CopyRightPageController extends Controller
 
     function __invoke()
     {
-        return view('static.copyright.index')->with('_USER',  Auth::user())->with("topNavValueText", "版权声明及免责条款");
+        return view('static.copyright.index')->with('_USER', Auth::user())->with("topNavValueText", "版权声明及免责条款");
     }
 }

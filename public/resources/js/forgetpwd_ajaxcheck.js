@@ -2,7 +2,7 @@ function createXHR() {
     window.ActiveXObject ? XHR = new ActiveXObject("Microsoft.XMLHTTP") : window.XMLHttpRequest && (XHR = new XMLHttpRequest)
 }
 function checkyanzhenma(e) {
-    e != "" && e != null ? (createXHR(), document.getElementById("checkyanzhenmaajax").innerHTML = "<img src='/resources/img/waiting.gif' alt=''>", XHR.open("GET", "/api/check/checkCpatcha?code=" + e, !0), XHR.onreadystatechange = bbcheck, XHR.send(null)) : document.getElementById("checkyanzhenmaajax").innerHTML = ""
+    e != "" && e != null ? (createXHR(), document.getElementById("checkyanzhenmaajax").innerHTML = "<img src='/resources/img/waiting.gif' alt=''>", XHR.open("GET", "/api/check/checkCaptcha?code=" + e, !0), XHR.onreadystatechange = bbcheck, XHR.send(null)) : document.getElementById("checkyanzhenmaajax").innerHTML = ""
 }
 function bbcheck() {
     if (XHR.readyState == 4 && XHR.status == 200) {

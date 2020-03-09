@@ -27,6 +27,40 @@ function reWriteUnBind() {
 function clearWechatInnerHtml() {
     document.getElementById("wechatBindInfo").innerHTML = "未绑定"
 }
+function setHookMode(isEnable) {
+    createXHR(), document.getElementById("HookModeSetter").innerHTML = "[ 设置中...... ]",
+        XHR.open("GET", "/api/hook/updateStatus?enable=" + (isEnable ? "true" : "false"), !0), XHR.onreadystatechange = setHookModeResult, XHR.send(null)
+}
+function setHookModeResult() {
+    if (XHR.readyState == 4 && XHR.status == 200) {
+        var e = XHR.responseText;
+        switch (e) {
+            case "0":
+                document.getElementById("hookModeInfo").innerHTML = "已禁用 [ 设置成功 ]"
+                window.setTimeout("reWriteHookInfo(false)", 2000);
+                break;
+            case "1":
+                document.getElementById("hookModeInfo").innerHTML = "已启用  [ 设置成功 ]"
+                window.setTimeout("reWriteHookInfo(true)", 2000);
+                break;
+            default:
+                document.getElementById("HookModeSetter").innerHTML = "[ 设置失败，无权限 ]"
+                window.setTimeout("clearHookSetterInnerHtml()", 2000);
+                break;
+        }
+    }
+}
+function reWriteHookInfo(currentIsEnable) {
+    if (currentIsEnable) {
+        document.getElementById("hookModeInfo").innerHTML = '启用中 <span id="HookModeSetter" class="edit">[<a style="cursor:pointer;" onclick="setHookMode(false);"> 禁用 </a>]</span>'
+        return;
+    }
+    document.getElementById("hookModeInfo").innerHTML = '禁用中 <span id="HookModeSetter" class="edit">[<a style="cursor:pointer;" onclick="setHookMode(true);"> 启用 </a>]</span>'
+}
+function clearHookSetterInnerHtml() {
+    document.getElementById("hookModeInfo").innerHTML = "无权限"
+}
+
 function resendcheck() {
     if (XHR.readyState == 4 && XHR.status == 200) {
         var e = XHR.responseText;

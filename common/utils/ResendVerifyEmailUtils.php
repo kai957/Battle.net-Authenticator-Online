@@ -1,6 +1,5 @@
 <?php
 use App\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 /**
@@ -57,5 +56,6 @@ class ResendVerifyEmailUtils
                 return "发送间隔太短了";
                 break;
         }
+        return null;
     }
 }

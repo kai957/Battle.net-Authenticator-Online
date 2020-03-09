@@ -11,6 +11,9 @@ class AuthUtils
 {
 
     private $authSyncInfo;
+    /**
+     * @var AuthBean[]
+     */
     private $authList = array();
     private $defaultAuth;
 
@@ -50,7 +53,7 @@ class AuthUtils
     }
 
     /**
-     * @return array
+     * @return AuthBean[]
      */
     public function getAuthList()
     {

@@ -8,15 +8,11 @@ use AuthBean;
 use Authenticator;
 use AuthSyncInfo;
 use AuthUtils;
-use DBHelper;
 use Functions;
-use HttpFormConstant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use RedisHelper;
-use WechatTokenBean;
 
-class OnButtonAuthController extends Controller
+class OneButtonAuthController extends Controller
 {
 
     function __construct()
@@ -50,6 +46,7 @@ class OnButtonAuthController extends Controller
 
     public function getRequestInfo(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $authUtils = new AuthUtils();
         $authUtils->getAllAuth($user);
@@ -123,6 +120,7 @@ class OnButtonAuthController extends Controller
             $jsonError = ['code' => 403, "message" => "提交数据有误"];
             return response()->json($jsonError);
         }
+        /** @var User $user */
         $user = Auth::user();
         $authUtils = new AuthUtils();
         $authUtils->getAllAuth($user);

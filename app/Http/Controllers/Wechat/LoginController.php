@@ -52,9 +52,9 @@ class LoginController extends Controller
         $jsonLogin = ['code' => 200, 'message' => '登录成功', "data" => [
             "token_wechat_session_v1" => $token,
             'hasAuth' => $authUtils->getAuthCount() > 0,
-            'canAddMoreAuth' =>  $user->getUserRight() == User::USER_BUSINESS_COOPERATION ? true : $authUtils->getAuthCount() < $userMaxAuthCount,
+            'canAddMoreAuth' => $user->getUserRight() == User::USER_BUSINESS_COOPERATION ? true : $authUtils->getAuthCount() < $userMaxAuthCount,
             'authCount' => $authUtils->getAuthCount(),
-            'userName' =>$user->getUserName()
+            'userName' => $user->getUserName()
         ]];
         return response()->json($jsonLogin);
     }

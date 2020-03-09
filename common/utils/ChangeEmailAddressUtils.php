@@ -46,7 +46,7 @@ class ChangeEmailAddressUtils
             $this->changeEmilAddressErrorCode = 2;
             return;
         }
-        if(!Functions::isEmailValid($this->userEmail)){
+        if (!Functions::isEmailValid($this->userEmail)) {
             $this->changeEmilAddressErrorCode = 3;
             return;
         }
@@ -58,12 +58,12 @@ class ChangeEmailAddressUtils
             $this->changeEmilAddressErrorCode = 5;
             return;
         }
-        if($user->getUserQuestion()!=$this->questionCode || $user->getUserAnswer()!=$this->userAnswer){
+        if ($user->getUserQuestion() != $this->questionCode || $user->getUserAnswer() != $this->userAnswer) {
             $this->changeEmilAddressErrorCode = 6;
             return;
         }
         $oldMailAddress = $user->getUserEmail();
-        if($oldMailAddress==$this->userEmail){
+        if ($oldMailAddress == $this->userEmail) {
             $this->changeEmilAddressErrorCode = 7;
             return;
         }
@@ -71,7 +71,7 @@ class ChangeEmailAddressUtils
         $user->setUserEmailCheckToken(Functions::getRandomString());
         $user->setUserEmailChecked(0);
         DBHelper::updateUserChangeEmailAddress($user);
-        MailSendUtils::sendChangeEmailAddressMail($user,$oldMailAddress);
+        MailSendUtils::sendChangeEmailAddressMail($user, $oldMailAddress);
         $this->changeEmilAddressErrorCode = 0;
     }
 

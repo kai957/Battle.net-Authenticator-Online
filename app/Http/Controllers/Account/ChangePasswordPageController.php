@@ -9,12 +9,10 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
-use ChangePasswordUtils;
-use KeyConstant;
-use Illuminate\Http\Request;
 use App\User;
+use ChangePasswordUtils;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use RegisterCheckUtils;
 
 
 class ChangePasswordPageController extends Controller
@@ -28,6 +26,7 @@ class ChangePasswordPageController extends Controller
 
     function get(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         if (!$user->getIsLogin()) {
             return view('account.changePassword.needLogin')->with('_USER', $user)->with("topNavValueText", "修改密码");
@@ -44,6 +43,7 @@ class ChangePasswordPageController extends Controller
 
     function post(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         if (!$user->getIsLogin()) {
             return view('account.changePassword.needLogin')->with('_USER', $user)->with("topNavValueText", "修改密码");

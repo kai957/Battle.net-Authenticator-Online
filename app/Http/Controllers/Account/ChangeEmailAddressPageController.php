@@ -9,13 +9,10 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
-use ChangeEmailAddressUtils;
-use ChangePasswordUtils;
-use KeyConstant;
-use Illuminate\Http\Request;
 use App\User;
+use ChangeEmailAddressUtils;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use RegisterCheckUtils;
 
 
 class ChangeEmailAddressPageController extends Controller
@@ -29,6 +26,7 @@ class ChangeEmailAddressPageController extends Controller
 
     function get(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         if (!$user->getIsLogin()) {
             return view('account.changeMailAddress.needLogin')->with('_USER', $user)->with("topNavValueText", "修改邮箱");
@@ -42,6 +40,7 @@ class ChangeEmailAddressPageController extends Controller
 
     function post(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         if (!$user->getIsLogin()) {
             return view('account.changeMailAddress.needLogin')->with('_USER', $user)->with("topNavValueText", "修改邮箱");

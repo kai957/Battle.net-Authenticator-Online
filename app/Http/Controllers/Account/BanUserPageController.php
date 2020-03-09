@@ -26,6 +26,7 @@ class BanUserPageController extends Controller
 
     function get(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         if (!$user->getIsLogin()) {
             return view('account.banUser.banUserResult')->with('_USER', Auth::user())->with("topNavValueText", "封禁用户")
@@ -44,6 +45,7 @@ class BanUserPageController extends Controller
 
     function post(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         if (!$user->getIsLogin()) {
             return view('account.banUser.banUserResult')->with('_USER', Auth::user())->with("topNavValueText", "封禁用户")

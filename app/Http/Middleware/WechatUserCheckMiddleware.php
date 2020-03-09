@@ -2,17 +2,14 @@
 
 namespace App\Http\Middleware;
 
+use App\User;
 use AuthUtils;
 use Closure;
-use CookieBean;
 use Functions;
 use Illuminate\Http\Request as Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use KeyConstant;
-use App\User;
-use DBHelper;
-use CookieHelper;
 use RedisHelper;
 use WechatTokenBean;
 

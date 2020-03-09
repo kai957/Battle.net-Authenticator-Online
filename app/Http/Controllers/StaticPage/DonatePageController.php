@@ -31,6 +31,7 @@ class DonatePageController extends Controller
 
     function addDonatePage(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         if (!$user->getIsLogin()) {
             return view('static.donate.addDonateResult')->with('_USER', Auth::user())->with("topNavValueText", "添加捐赠")
@@ -49,6 +50,7 @@ class DonatePageController extends Controller
 
     function addDonatePost(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         if (!$user->getIsLogin()) {
             return view('static.donate.addDonateResult')->with('_USER', Auth::user())->with("topNavValueText", "添加捐赠")

@@ -22,6 +22,6 @@ class FaqPageController extends Controller
 
     function __invoke()
     {
-        return view('static.faq.index')->with('_USER',  Auth::user())->with("topNavValueText", "FAQ");
+        return view('static.faq.index')->with('_USER', Auth::user())->with("topNavValueText", "FAQ");
     }
 }

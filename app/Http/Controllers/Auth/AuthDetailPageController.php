@@ -20,6 +20,9 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthDetailPageController extends Controller
 {
+    /**
+     * @var AuthUtils
+     */
     private $authUtils;
 
     function __construct()
@@ -56,6 +59,7 @@ class AuthDetailPageController extends Controller
     public function get(Request $request)
     {
         $authId = $request->input(HttpFormConstant::FORM_KEY_AUTH_ID);
+        /** @var User $user */
         $user = Auth::user();
         if (!$user->getIsLogin()) {//未登录，跳登录
             if (!empty($authId) && Functions::isInt($authId)) {

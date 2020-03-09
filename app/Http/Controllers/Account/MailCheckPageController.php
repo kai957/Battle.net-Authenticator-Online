@@ -9,13 +9,10 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
-use ChangePasswordUtils;
-use KeyConstant;
-use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use MailCheckUtils;
-use RegisterCheckUtils;
 
 
 class MailCheckPageController extends Controller
@@ -29,6 +26,7 @@ class MailCheckPageController extends Controller
 
     function doCheck(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $mailCheckUtils = new MailCheckUtils($request);
         $mailCheckUtils->doCheck($request, $user);
@@ -37,12 +35,12 @@ class MailCheckPageController extends Controller
                 ->with("checkResult", $mailCheckUtils->getErrorString($mailCheckUtils->getMailCheckErrorCode()) . "，即将转到主页")
                 ->with('jumpUrl', config('app.url'));
         }
-        switch ($mailCheckUtils->getMailCheckErrorCode()){
+        switch ($mailCheckUtils->getMailCheckErrorCode()) {
             case 0:
             case 2:
-            return view('account.mailCheck.index')->with("_USER", $user)->with("topNavValueText", "邮件地址确认")
-                ->with("checkResult", $mailCheckUtils->getErrorString($mailCheckUtils->getMailCheckErrorCode()) . "，即将转到登入页面")
-                ->with('jumpUrl', config('app.url') . "login");
+                return view('account.mailCheck.index')->with("_USER", $user)->with("topNavValueText", "邮件地址确认")
+                    ->with("checkResult", $mailCheckUtils->getErrorString($mailCheckUtils->getMailCheckErrorCode()) . "，即将转到登入页面")
+                    ->with('jumpUrl', config('app.url') . "login");
                 break;
             default:
                 return view('account.mailCheck.index')->with("_USER", $user)->with("topNavValueText", "邮件地址确认")

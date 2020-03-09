@@ -5,16 +5,8 @@ namespace App\Http\Controllers\Wechat;
 
 use App\Http\Controllers\Controller;
 use App\User;
-use AuthBean;
-use Authenticator;
-use AuthSyncInfo;
-use AuthUtils;
-use DBHelper;
-use Functions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use RedisHelper;
-use WechatTokenBean;
 
 class UserInfoController extends Controller
 {
@@ -26,6 +18,7 @@ class UserInfoController extends Controller
 
     public function userInfo(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $data = [
             'userId' => $user->getUserId(),

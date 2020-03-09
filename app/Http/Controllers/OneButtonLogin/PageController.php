@@ -28,6 +28,7 @@ class PageController extends Controller
 
     public function get(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         if (!$user->getIsLogin()) {
             return view('oneButtonLogin.error')->with("_USER", $user)->with("topNavValueText", "一键安全令")
@@ -48,7 +49,7 @@ class PageController extends Controller
                 ->with('errorString', ">您的登录操作已经超时，请重新回到战网或其客户端提交");
         }
         return view('oneButtonLogin.index')->with("_USER", $user)->with("topNavValueText", "一键安全令")
-            ->with('jsonArray', $jsonArray)->with('gotJson', $json)->with('sendTimeString',self::getTimeText($jsonArray['data']['time']));
+            ->with('jsonArray', $jsonArray)->with('gotJson', $json)->with('sendTimeString', self::getTimeText($jsonArray['data']['time']));
     }
 
     function getTimeText($time)

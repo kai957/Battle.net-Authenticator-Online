@@ -9,13 +9,10 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
-use ChangePasswordUtils;
-use FindPasswordMailCheckUtils;
-use KeyConstant;
-use Illuminate\Http\Request;
 use App\User;
+use FindPasswordMailCheckUtils;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use RegisterCheckUtils;
 
 
 class FindPasswordInMailLinkPageController extends Controller
@@ -31,6 +28,7 @@ class FindPasswordInMailLinkPageController extends Controller
     {
         $findPasswordMailCheckUtils = new FindPasswordMailCheckUtils($request);
         if ($findPasswordMailCheckUtils->getFindPasswordMailCheckErrorCode() != 0) {
+            /** @var User $user */
             $user = Auth::user();
             return view('account.findPasswordInMailLink.error')->with("_USER", $user)->with("topNavValueText", "重置密码校验")
                 ->with("result", $findPasswordMailCheckUtils->getErrorString($findPasswordMailCheckUtils->getFindPasswordMailCheckErrorCode()));

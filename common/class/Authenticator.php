@@ -213,6 +213,7 @@ class Authenticator
      * 序列号格式如下，XX为地域，Y为数字
      * 'XX-YYYY-YYYY-YYYY'
      * @return 返回序列号
+     * @throws DataAuthenticatorException
      */
     public function serial()
     {
@@ -331,7 +332,7 @@ class Authenticator
             case "eu":
                 return "https://eu.battle.net";
         }
-        //return sprintf(self::$server, strtolower($this->region()));
+        return sprintf(self::$server, strtolower($this->region()));
     }
 
     // </editor-fold>

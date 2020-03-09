@@ -23,6 +23,9 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthApiController extends Controller
 {
+    /**
+     * @var AuthUtils
+     */
     private $authUtils;
 
     function __construct()
@@ -64,6 +67,7 @@ class AuthApiController extends Controller
      */
     public function doSync(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $authBean = self::isAuthValidAndBelongToUser($request, $user);
         if ($authBean == false) {
@@ -90,6 +94,7 @@ class AuthApiController extends Controller
      */
     public function setDefault(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $authBean = self::isAuthValidAndBelongToUser($request, $user);
         if ($authBean == false) {
@@ -119,6 +124,7 @@ class AuthApiController extends Controller
      */
     public function changeName(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $authBean = self::isAuthValidAndBelongToUser($request, $user);
         if ($authBean == false) {
@@ -139,6 +145,7 @@ class AuthApiController extends Controller
      */
     public function deleteAuth(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $authBean = self::isAuthValidAndBelongToUser($request, $user);
         if ($authBean == false) {
@@ -196,6 +203,7 @@ class AuthApiController extends Controller
 
     public function getCode(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $authBean = self::isAuthValidAndBelongToUser($request, $user);
         if ($authBean == false) {
@@ -224,7 +232,6 @@ class AuthApiController extends Controller
                 'success' => true
             ]);
         } catch (\Exception $e) {
-            echo $e;
             return response()->json([
                 'code' => "@@@@@@",
                 'time' => 0,
@@ -236,11 +243,12 @@ class AuthApiController extends Controller
 
     public function getAllCode(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
         $this->authUtils = new AuthUtils();
         $this->authUtils->getAllAuth($user);
         if ($this->authUtils->getAuthCount() < 1) {
-            return response()->json(['success' => false,'message'=>"没有安全令"]);
+            return response()->json(['success' => false, 'message' => "没有安全令"]);
         }
         $authCodeList = array();
         $authList = $this->authUtils->getAuthList();

@@ -26,7 +26,7 @@ class CheckController extends Controller
      */
     public function checkUserName(Request $request)
     {
-        $name = $request->get("name");
+        $name = $request->input("name");
         if (empty($name)) {
             return response("");
         }
@@ -39,9 +39,9 @@ class CheckController extends Controller
         return response("true");
     }
 
-    public function checkCpatcha(Request $request)
+    public function checkCaptcha(Request $request)
     {
-        $code = $request->get("code");
+        $code = $request->input("code");
         if (empty($code)) {
             return response("false");
         }

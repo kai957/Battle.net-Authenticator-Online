@@ -63,6 +63,14 @@ function init() {
                 document.getElementById("copydatamode").innerHTML = "请刷新验证码&nbsp;<img class='getCodeStateImage' src='/resources/img/warning2.png'/>", setTimeout("document.getElementById('copydatamode').innerHTML=''", 2e3)
             }
         });
+        $("#auth-serial-copy").show();
+        var clipboardSerial = new Clipboard(document.getElementById('auth-serial-copy'));
+        clipboardSerial.on('success', function (e) {
+            document.getElementById("copydatamode").innerHTML = "已复制到剪切板&nbsp;<img class='getCodeStateImage' src='/resources/img/success.png'/>", setTimeout("document.getElementById('copydatamode').innerHTML=''", 2e3)
+        });
+        clipboardSerial.on('error', function (e) {
+            document.getElementById("copydatamode").innerHTML = "复制到剪切板失败&nbsp;<img class='getCodeStateImage' src='/resources/img/warning2.png'/>", setTimeout("document.getElementById('copydatamode').innerHTML=''", 2e3)
+        });
         return;
     }
     ZeroClipboard.setMoviePath("/resources/swf/ZeroClipboard.swf"), clip = new ZeroClipboard.Client, clip.setHandCursor(!0), clip.addEventListener("mouseOver", my_mouse_over), clip.glue("creation-submit"), clip.addEventListener("mouseUp", my_mouse_up)

@@ -55,11 +55,18 @@
                             </div>
                             <div id="rightajaxzhuangtai" class="rightajaxzhuangtai"></div>
                             <div id="copydatamode" class="copydatamode"></div>
+                            @if($_USER->getUserRight() == $_USER::USER_BUSINESS_COOPERATION)
+                                <button class="ui-button button1" id="auth-serial-copy" tabindex="1"
+                                        data-clipboard-text="{{$authBean->getAuthSerial()}}" style="display: none;">
+                                    <span class="button-left"><span class="button-right">复制令牌序列号</span></span>
+                                </button>
+                            @endif
                             <button class="ui-button button1" id="creation-submit" tabindex="1"
                                     data-clipboard-text="">
                                 <span class="button-left"><span class="button-right">复制令牌验证码</span></span>
                             </button>
-                            <button class="ui-button button1" id="refreshcode" onclick="refreshcodegeas();" tabindex="1">
+                            <button class="ui-button button1" id="refreshcode" onclick="refreshcodegeas();"
+                                    tabindex="1">
                                 <span class="button-left"><span class="button-right">刷新令牌验证码</span></span>
                             </button>
                         </div>

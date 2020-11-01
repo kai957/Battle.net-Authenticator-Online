@@ -58,7 +58,7 @@
                     @endif
                     @if(!empty(config('app.icp_record_no')))
                         <span class="beian"><a
-                                    href="http://www.beian.miit.gov.cn/">{{config('app.icp_record_no')}}</a></span>
+                                    href="http://beian.miit.gov.cn/">{{config('app.icp_record_no')}}</a></span>
                     @endif
                     @if(!empty(config('app.police_record_no')))
                         <span class="beian" style="margin-left: 12px;">

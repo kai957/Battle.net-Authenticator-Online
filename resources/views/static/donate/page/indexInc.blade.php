@@ -12,8 +12,9 @@
     @if(!empty(config('app.admin_username')) && $_USER->getIsLogin() && strtoupper(config('app.admin_username'))==strtoupper($_USER->getUserName()))
         <p style="font-size:32px;text-align: left;padding-top: 5px;">管理员功能</p>
         <p style="padding-top: 10px;text-align: left;">
-            {{strtoupper($_USER->getUserName())}}，您好，您是管理员账户，如要添加捐赠信息，请到<a href="addDonate">添加捐赠</a>页面操作。<br>
-            如果要封禁用户，请到<a href="banUser">封禁用户</a>页面操作。
+            {{strtoupper($_USER->getUserName())}}，您好，您是管理员账户，如要添加捐赠信息，请到<a href="addDonate">添加捐赠</a>页面操作，
+            如果要添加商务合作信息，请到<a href="addCooperateDonate">添加商务合作</a>页面操作。<br>
+            如果要封禁用户，请到<a href="banUser">封禁用户</a>页面操作。<br>
         </p>
         <br>
         <hr>

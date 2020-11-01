@@ -1,0 +1,5 @@
+@include('universal.header.header_normal')
+@include('static.donate.source.AddDonateJsAndCss')
+@include('universal.top.layoutTop')
+@include('static.donate.page.addCooperateInc')
+@include('universal.footer.bottom')

@@ -357,6 +357,19 @@ class DBHelper
         );
     }
 
+    public static function updateUserSetCooperate(User $user)
+    {
+        if (empty($user->getUserId())) {
+            return false;
+        }
+        CacheHelper::removeCachedUserInfo($user->getUserId());
+        return DB::table(self::TABLE_USER)->where('user_id', $user->getUserId())->update(
+            [
+                'user_right' => $user->getUserRight(),
+            ]
+        );
+    }
+
     /**
      * 封禁用户
      * @param User $user

@@ -73,11 +73,11 @@ class DonatePageController extends Controller
             $donateName = "匿名土豪";
         }
         if (empty($donateCurrency)) {
-            return view('static.donate.addDonate')->with('_USER', Auth::user())->with("topNavValueText", "添加捐赠")
+            return view('static.donate.addDonateResult')->with('_USER', Auth::user())->with("topNavValueText", "添加捐赠")
                 ->with("errorString", "请填写币种信息。");
         }
         if (empty($donateCount)) {
-            return view('static.donate.addDonate')->with('_USER', Auth::user())->with("topNavValueText", "添加捐赠")
+            return view('static.donate.addDonateResult')->with('_USER', Auth::user())->with("topNavValueText", "添加捐赠")
                 ->with("errorString", "请填写捐赠数量。");
         }
         if (empty($donateTime) || strtotime($donateTime) == false) {
@@ -103,5 +103,55 @@ class DonatePageController extends Controller
         }
         return view('static.donate.addDonateResult')->with('_USER', Auth::user())->with("topNavValueText", "添加捐赠")
             ->with("errorString", "添加捐赠信息成功");
+    }
+
+    function addCooperateDonatePage(Request $request)
+    {
+        /** @var User $user */
+        $user = Auth::user();
+        if (!$user->getIsLogin()) {
+            return view('static.donate.addCooperateResult')->with('_USER', Auth::user())->with("topNavValueText", "添加商务合作")
+                ->with("errorString", "请登录后再添加");
+        }
+        if (empty(config('app.admin_username'))) {
+            return view('static.donate.addCooperateResult')->with('_USER', Auth::user())->with("topNavValueText", "添加商务合作")
+                ->with("errorString", "请先配置管理员信息再添加");
+        }
+        if (strtoupper(config('app.admin_username')) != strtoupper($user->getUserName())) {
+            return view('static.donate.addCooperateResult')->with('_USER', Auth::user())->with("topNavValueText", "添加商务合作")
+                ->with("errorString", "您不是管理员，无法添加商务合作信息");
+        }
+        return view('static.donate.addCooperate')->with('_USER', Auth::user())->with("topNavValueText", "添加商务合作");
+    }
+
+    function addCooperateDonatePost(Request $request)
+    {
+        /** @var User $user */
+        $user = Auth::user();
+        if (!$user->getIsLogin()) {
+            return view('static.donate.addCooperateResult')->with('_USER', Auth::user())->with("topNavValueText", "添加商务合作")
+                ->with("errorString", "请登录后再添加");
+        }
+        if (empty(config('app.admin_username'))) {
+            return view('static.donate.addCooperateResult')->with('_USER', Auth::user())->with("topNavValueText", "添加商务合作")
+                ->with("errorString", "请先配置管理员信息再添加");
+        }
+        if (strtoupper(config('app.admin_username')) != strtoupper($user->getUserName())) {
+            return view('static.donate.addCooperateResult')->with('_USER', Auth::user())->with("topNavValueText", "添加商务合作")
+                ->with("errorString", "您不是管理员，无法添加商务合作");
+        }
+        $donateUserName = $request->input('userName');
+        if (empty($donateUserName)) {
+            return view('static.donate.addCooperateResult')->with('_USER', Auth::user())->with("topNavValueText", "添加商务合作")
+                ->with("errorString", "请填写商务合作账号信息。");
+        }
+        $user = new User();
+        $user->initUserByUserName($donateUserName);
+        if (!empty($user->getUserId()) && Functions::isInt($user->getUserId())) {//该操作自动设置用户解禁，但是商务合作账号将变成普通账号，需手动再修改
+            $user->setUserRight(User::USER_BUSINESS_COOPERATION);
+            DBHelper::updateUserSetCooperate($user);
+        }
+        return view('static.donate.addCooperateResult')->with('_USER', Auth::user())->with("topNavValueText", "添加商务合作")
+            ->with("errorString", "添加商务合作信息成功");
     }
 }

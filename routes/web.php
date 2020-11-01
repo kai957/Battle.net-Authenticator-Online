@@ -83,6 +83,8 @@ Route::post('api/oneButtonAuth/commit', 'OneButtonLogin\ApiController@commitPost
 Route::any('donate', 'StaticPage\DonatePageController@seeDonate');//捐赠
 Route::get('addDonate', 'StaticPage\DonatePageController@addDonatePage');//添加捐赠信息
 Route::post('addDonate', 'StaticPage\DonatePageController@addDonatePost');//添加捐赠信息
+Route::get('addCooperateDonate', 'StaticPage\DonatePageController@addCooperateDonatePage');//添加商务合作
+Route::post('addCooperateDonate', 'StaticPage\DonatePageController@addCooperateDonatePost');//添加商务合作
 
 #用户相关
 Route::get('banUser', 'Account\BanUserPageController@get');//封禁用户

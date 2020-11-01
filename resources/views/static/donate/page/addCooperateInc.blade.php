@@ -15,11 +15,11 @@
             @endif
             <div id="page-header">
                 <h2 class="subcategory">
-                    封禁用户
+                    添加商务合作信息
                 </h2>
-                <h3 class="headline"> 填写用户名，直接让丫的拜拜 </h3>
+                <h3 class="headline"> 填写商务合作信息 </h3>
             </div>
-            <form id="support-form" class="login-support-form" novalidate="novalidate" action="/banUser" style="margin-top: 50px;"
+            <form id="support-form" class="login-support-form" novalidate="novalidate" action="/addCooperateDonate" style="margin-top: 50px;"
                   method="post">
                 {{csrf_field()}}
                 <div class="input-row input-row-text">
@@ -34,7 +34,7 @@
                     <span class="input-right" style="margin-left: -3px;">
                         <span class="input-text input-text-medium">
                             <input name="userName" id="userName" onblur="checkname(this.value);"  class="medium border-5 glow-shadow-2" autocomplete="off"
-                                   placeholder="请输入系统用户名，送TA回家" required="required"
+                                   placeholder="请输入系统用户名" required="required"
                                    maxlength="64" tabindex="1" type="text">
                                 <span id="checkusernameajax"></span>
                             <span class="inline-message " id="email-message">&nbsp;</span>
@@ -44,8 +44,8 @@
 
                 <fieldset class="ui-controls" style="margin-top: 40px;">
                     <button class="ui-button button1" type="submit" id="creation-submit" tabindex="1"><span
-                                class="button-left"><span class="button-right">封禁</span></span></button>
-                    <a class="ui-cancel " href="/">
+                                class="button-left"><span class="button-right">添加</span></span></button>
+                    <a class="ui-cancel " href="/donate">
                         <span>
                             返回 </span>
                     </a>

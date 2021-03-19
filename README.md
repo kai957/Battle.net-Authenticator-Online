@@ -33,7 +33,7 @@ php版本：至少为5.6.4，推荐7.0及以上，需安装php-gd、php-mysql、
 ## 站点信息
 [https://myauth.us/](https://myauth.us/)是作者基于本项目搭建的站点。<br>
 The site [https://myauth.us/](https://myauth.us/) based on this project.<br>
-如欲捐赠，请参访[https://myauth.us/donate.php](https://myauth.us/donate.php)页面。 
+如欲捐赠，请参访[https://myauth.us/donate](https://myauth.us/donate)页面。 
 
 ## 相关小程序信息
 ![image](https://github.com/ymback/Battle.net-Authenticator-Wechat-Mini-Program/blob/master/QRCODE.jpg)<br>

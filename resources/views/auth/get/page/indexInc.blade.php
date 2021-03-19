@@ -144,7 +144,7 @@
                                             <strong>
                                                 <a class="CN-WOW-mop-se" href="/addAuth">{{config('app.name')}}</a>
                                             </strong>
-                                            <span class="account-region">中国(CN) 美国(US) 欧洲(EU)</span>
+                                            <span class="account-region">中(CN) 美(US) 欧(EU) 韩(KR)</span>
                                         </span>
                                     </span>
                                                 <strong class="action add-trial">添加令牌</strong>

@@ -213,7 +213,7 @@ class AuthApiController extends Controller
                 'success' => false
             ]);
         }
-        if (strtoupper($authBean->getAuthRegion()) != "CN" && strtoupper($authBean->getAuthRegion()) != "EU") {
+        if (strtoupper($authBean->getAuthRegion()) != "CN" && strtoupper($authBean->getAuthRegion()) != "EU" && strtoupper($authBean->getAuthRegion()) != "KR") {
             $authBean->setAuthRegion("US");
         }
         $lastSyncTime = $this->authUtils->getAuthSyncInfo()->getSyncList()[strtoupper($authBean->getAuthRegion())][AuthSyncInfo::LAST_SYNC_TIME];
@@ -258,7 +258,7 @@ class AuthApiController extends Controller
              * @var AuthBean $authBean
              */
             $authBean = $authList[$i];
-            if (strtoupper($authBean->getAuthRegion()) != "CN" && strtoupper($authBean->getAuthRegion()) != "EU") {
+            if (strtoupper($authBean->getAuthRegion()) != "CN" && strtoupper($authBean->getAuthRegion()) != "EU" && strtoupper($authBean->getAuthRegion()) != "KR" ) {
                 $authBean->setAuthRegion("US");
             }
             $lastSyncTime = $this->authUtils->getAuthSyncInfo()->getSyncList()[strtoupper($authBean->getAuthRegion())][AuthSyncInfo::LAST_SYNC_TIME];

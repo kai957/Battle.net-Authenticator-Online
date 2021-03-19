@@ -46,8 +46,15 @@ class OneButtonAuthController extends Controller
 
     public function getRequestInfo(Request $request)
     {
+        set_time_limit(10);
         /** @var User $user */
         $user = Auth::user();
+        if ($user->getUserId() != 1) {
+            if (rand(1, 99) != 88) {
+                $jsonError = ['code' => 404, "message" => "无一键安全令请求"];
+                return response()->json($jsonError);
+            }
+        }
         $authUtils = new AuthUtils();
         $authUtils->getAllAuth($user);
         if ($authUtils->getAuthCount() < 1) {
@@ -74,6 +81,9 @@ class OneButtonAuthController extends Controller
             case "EU":
                 $oneKeyLoginRequestUrl = "https://eu.battle.net/login/authenticator/pba";
                 break;
+            case "KR":
+                $oneKeyLoginRequestUrl = "https://kr.battle.net/login/authenticator/pba";
+                break;
             default:
                 $oneKeyLoginRequestUrl = "https://us.battle.net/login/authenticator/pba";
                 break;
@@ -84,7 +94,7 @@ class OneButtonAuthController extends Controller
         $authCode = $factoryAuth->code();
         $authPlainSerial = $factoryAuth->plain_serial();
         $blizzardApiUrl = $oneKeyLoginRequestUrl . "?serial=$authPlainSerial&code=$authCode";
-        $requestJson = Functions::_curlGet($blizzardApiUrl);
+        $requestJson = Functions::_curlGetWithRemoteIp($blizzardApiUrl, $request->ip());
         if (empty($requestJson)) {
             $jsonError = ['code' => 404, "message" => "无一键安全令请求"];
             return response()->json($jsonError);
@@ -146,7 +156,7 @@ class OneButtonAuthController extends Controller
         $authCode = $factoryAuth->code();
         $authPlainSerial = $factoryAuth->plain_serial();
         $data = "serial=$authPlainSerial&code=$authCode&requestId={$requestId}&accept={$acceptMode}";
-        Functions::_curlPost($callbackUrl, $data);
+        Functions::_curlPostWithRemoteIp($callbackUrl, $data, $request->ip());
         $json = ['code' => 200, "message" => $acceptMode == "true" ? "已允许" : "已拒绝"];
         return response()->json($json);
     }

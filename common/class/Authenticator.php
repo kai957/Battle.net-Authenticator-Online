@@ -38,7 +38,7 @@ class Authenticator
     /**
      * @字符串，服务器地址
      */
-    static private $server = 'm.%s.mobileservice.blizzard.com';
+    static private $server = '%s.mobile-service.blizzard.com';
 
     /**
      * @字符串，请求编号URL
@@ -63,7 +63,7 @@ class Authenticator
     /**
      * @指针数组，地址
      */
-    static private $accepted_region = array('EU', 'US', 'CN');
+    static private $accepted_region = array('EU', 'US', 'CN', 'KR');
 
     /**
      * @整数，等待时间
@@ -79,7 +79,7 @@ class Authenticator
     // <editor-fold defaultstate="collapsed" desc="初始化安全令变量">
 
     /**
-     * @字符串，2位，请求地域(US/EU/CN)
+     * @字符串，2位，请求地域(US/EU/CN/KR)
      */
     private $region = null;
 
@@ -126,7 +126,7 @@ class Authenticator
 
     /**
      * 由给的$region参数快速生成一个安全令.
-     * @传入 2位字符串代表地域US/EU/CN.
+     * @传入 2位字符串代表地域US/EU/CN/KR.
      * @返回 生成的安全令
      */
     static public function generate($region)
@@ -326,15 +326,38 @@ class Authenticator
     {
         switch (strtolower($this->region())) {
             case "cn":
-                return "https://www.battlenet.com.cn";
+                return "https://mobile-service.battlenet.com.cn";
             case "us":
-                return "https://us.battle.net";
+                return "http://us.mobile-service.blizzard.com";
             case "eu":
-                return "https://eu.battle.net";
+                return "http://eu.mobile-service.blizzard.com";
+            case "kr":
+                return "http://kr.mobile-service.blizzard.com";
         }
         return sprintf(self::$server, strtolower($this->region()));
     }
 
+    /**
+     * 返回基于选择地域所产生的服务器主机地址,最新地址已经更改了
+     * @返回 服务器主机地址
+     * @param $region
+     * @return string
+     */
+    public static function getServerFromRegion($region)
+    {
+        switch (strtolower($region)) {
+            case "cn":
+                return "https://mobile-service.battlenet.com.cn";
+//                return "https://www.battlenet.com.cn";
+            case "us":
+                return "http://us.mobile-service.blizzard.com";
+            case "eu":
+                return "http://eu.mobile-service.blizzard.com";
+            case "kr":
+                return "http://kr.mobile-service.blizzard.com";
+        }
+        return sprintf(self::$server, strtolower($region));
+    }
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="与服务器交互通讯">
 
@@ -393,7 +416,7 @@ class Authenticator
         $enc_key = $this->create_key(37);
         $model = str_pad('ALPC_IPHONE7PLUS_OLAUTH', 16, chr(0), STR_PAD_RIGHT);   //截取16位，不足用0补齐
 
-        $data = $f_code . $enc_key . $this->region() . $model;                //0:1,1-37:37位随机密钥,38-39:US/EU/CN,40-55:16位设备信息
+        $data = $f_code . $enc_key . $this->region() . $model;                //0:1,1-37:37位随机密钥,38-39:US/EU/CN/KR,40-55:16位设备信息
         $response = $this->send(self::$initialize_uri, self::GENERATE_SIZE, $this->encrypt($data)); //将56位数据通过RSA-1024加密后发送，并返回信息
 
         $data = $this->decrypt(substr($response, 8), $enc_key);         //解密接收到的返回信息

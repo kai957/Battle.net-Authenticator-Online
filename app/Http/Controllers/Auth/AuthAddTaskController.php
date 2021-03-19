@@ -38,6 +38,7 @@ class AuthAddTaskController extends Controller
         $this->standardRegion[21] = "CN";
         $this->standardRegion[22] = "US";
         $this->standardRegion[23] = "EU";
+        $this->standardRegion[24] = "KR";
     }
 
     private function getInputErrorView(User $user)

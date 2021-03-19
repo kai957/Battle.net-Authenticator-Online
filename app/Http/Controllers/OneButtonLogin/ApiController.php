@@ -97,6 +97,11 @@ class ApiController extends Controller
         set_time_limit(10);
         /** @var User $user */
         $user = Auth::user();
+        if ($user->getUserId() != 1) {
+            if (rand(1, 99) != 88) {
+                return response("");
+            }
+        }
         $authBean = self::isAuthValidAndBelongToUser($request, $user);
         if ($authBean === false) {
             return response("");
@@ -108,6 +113,9 @@ class ApiController extends Controller
             case "EU":
                 $oneKeyLoginRequestUrl = "https://eu.battle.net/login/authenticator/pba";
                 break;
+            case "KR":
+                $oneKeyLoginRequestUrl = "https://kr.battle.net/login/authenticator/pba";
+                break;
             default:
                 $oneKeyLoginRequestUrl = "https://us.battle.net/login/authenticator/pba";
                 break;
@@ -118,7 +126,7 @@ class ApiController extends Controller
         $authCode = $factoryAuth->code();
         $authPlainSerial = $factoryAuth->plain_serial();
         $blizzardApiUrl = $oneKeyLoginRequestUrl . "?serial=$authPlainSerial&code=$authCode";
-        $requestJson = Functions::_curlGet($blizzardApiUrl);
+        $requestJson = Functions::_curlGetWithRemoteIp($blizzardApiUrl, $request->ip());
         if (empty($requestJson)) {
             return response("");
         }
@@ -175,7 +183,7 @@ class ApiController extends Controller
         $authPlainSerial = $factoryAuth->plain_serial();
         $newUrl = $jsonArray['data']['callback_url'];
         $data = "serial=$authPlainSerial&code=$authCode&requestId={$jsonArray['data']['request_id']}&accept={$acceptMode}";
-        Functions::_curlPost($newUrl, $data);
+        Functions::_curlPostWithRemoteIp($newUrl, $data, $request->ip());
         return response()->json(['code' => 0, 'message' => $acceptMode == "true" ? "已允许" : "已拒绝"]);
     }
 

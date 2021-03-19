@@ -6,8 +6,8 @@
         clipboardData = e.clipboardData || window.clipboardData;
         pastedData = clipboardData.getData('Text');
         var data = pastedData.toUpperCase();
-        var reg17 = /(US|EU|CN)-([0-9]{4})-([0-9]{4})-([0-9]{4})/;
-        var reg14 = /(US|EU|CN)([0-9]{4})([0-9]{4})([0-9]{4})/;
+        var reg17 = /(US|EU|CN|KR)-([0-9]{4})-([0-9]{4})-([0-9]{4})/;
+        var reg14 = /(US|EU|CN|KR)([0-9]{4})([0-9]{4})([0-9]{4})/;
         var array = [];
         if (data.length === 17 && reg17.test(data)) {
             array = data.match(reg17);
@@ -26,6 +26,9 @@
                     break;
                 case "EU":
                     $("#question3").val("23");
+                    break;
+                case "KR":
+                    $("#question3").val("24");
                     break;
             }
             $('#authcodeA3').val(array[2]);
@@ -51,8 +54,8 @@
         clipboardData = e.clipboardData || window.clipboardData;
         pastedData = clipboardData.getData('Text');
         var data = pastedData.toUpperCase();
-        var reg17 = /(US|EU|CN)-([0-9]{4})-([0-9]{4})-([0-9]{4})/;
-        var reg14 = /(US|EU|CN)([0-9]{4})([0-9]{4})([0-9]{4})/;
+        var reg17 = /(US|EU|CN|KR)-([0-9]{4})-([0-9]{4})-([0-9]{4})/;
+        var reg14 = /(US|EU|CN|KR)([0-9]{4})([0-9]{4})([0-9]{4})/;
         var array = [];
         if (data.length === 17 && reg17.test(data)) {
             array = data.match(reg17);
@@ -71,6 +74,9 @@
                     break;
                 case "EU":
                     $("#question2").val("23");
+                    break;
+                case "KR":
+                    $("#question2").val("24");
                     break;
             }
             $('#authcodeA2').val(array[2]);

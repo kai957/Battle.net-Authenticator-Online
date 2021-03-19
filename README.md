@@ -1,7 +1,7 @@
 # 战网安全令在线版 / Battle.net Authenticator Online
 
 作者:**竹井詩織里**<br>
-功能:支持CN/US/EU开头的战网安全令颁发、还原、8位密钥查看，支持暴雪一键安全令功能(即免输安全令一键登录)。<br>
+功能:支持CN/US/EU/KR开头的战网安全令颁发、还原、8位密钥查看，支持暴雪一键安全令功能(即免输安全令一键登录)。<br>
 感谢:安全令解析的相关代码修改自[Gilles Crettenand](https://github.com/krtek4)的<a href="https://github.com/krtek4/php-bma">php-bma</a>项目，再次表示感谢.
 
 # 版本更新日志

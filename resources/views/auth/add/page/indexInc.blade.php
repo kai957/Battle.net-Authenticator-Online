@@ -63,7 +63,7 @@
                                     <div id="page-header" class="pageheadernav">
                                         <p class="privacy-message">
                                             点击通过服务器生成安全令，{{config('app.name')}}
-                                            将按照选择的地区向暴雪服务器请求一枚新的安全令，地区为：中国(CN)，美国(US)，欧洲(EU)。<br>
+                                            将按照选择的地区向暴雪服务器请求一枚新的安全令，地区为：中国(CN)，美国(US)，欧洲(EU)，韩国(KR)。<br>
                                             注意：选择美国(US)或欧洲(EU)有一定几率获得EU或US开头的安全令，该安全令在欧服美服等地区通用，但不能用于中国大陆国服账号。<br>
                                             若不选择将默认向暴雪中国服务器发出请求。
                                         </p>
@@ -109,6 +109,7 @@
                                                     <option value="21">CN&nbsp;&nbsp;&nbsp;&nbsp;(暴雪中国服务器,cn.battle.net)</option>
                                                     <option value="22">US&nbsp;&nbsp;&nbsp;&nbsp;(暴雪美国服务器,us.battle.net)</option>
                                                     <option value="23">EU&nbsp;&nbsp;&nbsp;&nbsp;(暴雪欧洲服务器,eu.battle.net)</option>
+                                                    <option value="24">KR&nbsp;&nbsp;&nbsp;&nbsp;(暴雪韩国服务器,kr.battle.net)</option>
                                                 </select>
                                             </span>
                                         </span>
@@ -266,6 +267,7 @@
                                                     <option value="21" selected="selected">CN</option>
                                                     <option value="22">US</option>
                                                     <option value="23">EU</option>
+                                                    <option value="24">KR</option>
                                                 </select>
                                                 <span class="label-text1">-</span>
                                                 <span class="input-text input-text-litsmall input-littext">
@@ -475,6 +477,7 @@
                                                     <option value="21" selected="selected">CN</option>
                                                     <option value="22">US</option>
                                                     <option value="23">EU</option>
+                                                    <option value="24">KR</option>
                                                 </select>
                                                 <span class="label-text1">-</span>
                                                 <span class="input-text input-text-litsmall input-littext"><input

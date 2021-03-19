@@ -36,10 +36,11 @@
                                     <img src="/resources/img/mini-program-qr-code.jpg" alt=""><br>
                                 </p>
                                 <p>
-                                    我们支持CN/EU/US三大安全令颁发服务器的安全令申请，各服务器颁发的安全令的主要使用国家或地区如下：<br>
+                                    我们支持CN/EU/US/KR四大安全令颁发服务器的安全令申请，各服务器颁发的安全令的主要使用国家或地区如下：<br>
                                     CN：中国大陆(国服)<br>
                                     EU：欧洲诸国(欧服)<br>
-                                    US：美国/巴西(美服)、韩国(韩服)、台湾地区/香港地区/澳门地区/新加坡等南洋诸国(台服)
+                                    US：美国/巴西(美服)、台湾地区/香港地区/澳门地区/新加坡等南洋诸国(台服)<br>
+                                    KR：韩国(韩服)
                                 </p>
                                 <p>
                                     通过我们申请或还原的安全令与官方APP显示的验证码一致，验证码刷新时间误差基本在3秒以内，误差取决于您连接到我们服务器的延迟
@@ -59,9 +60,10 @@
                                 </p>
                                 <p>
                                     Ps:2016年6月起，战网官方推出了一键登录功能，您可以在战网或者其客户端上登录，在确认安全令页面，现在会显示如下页面<br>
-                                    <img src="/resources/img/netpageinfo.png" alt=""><br><br>
+                                    <img src="/resources/img/netpageinfo.png" alt=""><br>
                                     现在使用{{config('app.name')}}，您只需要在弹窗中点击允许即可登录，或点击拒绝取消登录请求，而无需再输入安全令，是的，我们现已支持该功能<br>
-                                    <img src="/resources/img/onkeyintro.png" alt="">
+                                    <img src="/resources/img/onkeyintro.png" alt=""><br>
+                                    但请注意，随着暴雪的更新，该功能存在调用限制，所以该功能已不能稳定运行，请尽量使用安全令验证码进行登录
                                 </p>
                                 <p>
                                     如果忘记密码请前往<a href="/forgetPassword">重置密码</a>页面，

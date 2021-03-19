@@ -58,6 +58,47 @@ class Functions
         return $html;
     }
 
+    /**
+     * curl获取数据
+     * @param string $url
+     * @param string $ip
+     * @param string $userAgent
+     * @return string
+     */
+    static function _curlGetWithRemoteIp($url = '', $ip = '', $userAgent = '')
+    {
+        $ch = curl_init();
+        if (strlen($userAgent) > 6) {
+            curl_setopt($ch, CURLOPT_USERAGENT, $userAgent);
+        }
+        if (config('app.use_proxy') && !empty(config('app.proxy_url'))) {//测试模式
+            curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
+            curl_setopt($ch, CURLOPT_PROXY, config('app.proxy_url'));
+        }
+        if (strlen($ip) < 8) {
+            $ip = random_int(1, 255) . "." . random_int(1, 255) . "." . random_int(1, 255) . "." . random_int(1, 255);
+        }
+        $header = array(
+            'CLIENT-IP:' . $ip,
+            'X-FORWARDED-FOR:' . $ip,
+        );
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        ob_start();
+        curl_exec($ch);
+        $html = ob_get_contents();
+        ob_end_clean();
+        curl_close($ch);
+        if (!is_string($html) || !strlen($html)) {
+            return "";
+        }
+        return $html;
+    }
+
     public static function _curlPost($url, $data)
     {
         $ch = curl_init();
@@ -65,6 +106,41 @@ class Functions
             curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
             curl_setopt($ch, CURLOPT_PROXY, config('app.proxy_url'));
         }
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        if (!empty($data)) {
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        }
+        ob_start();
+        curl_exec($ch);
+        $html = ob_get_contents();
+        ob_end_clean();
+        curl_close($ch);
+        if (!is_string($html) || !strlen($html)) {
+            return "";
+        }
+        return $html;
+    }
+
+    public static function _curlPostWithRemoteIp($url, $data, $ip)
+    {
+        $ch = curl_init();
+        if (config('app.use_proxy') && !empty(config('app.proxy_url'))) {//测试模式
+            curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
+            curl_setopt($ch, CURLOPT_PROXY, config('app.proxy_url'));
+        }
+        if (strlen($ip) < 8) {
+            $ip = random_int(1, 255) . "." . random_int(1, 255) . "." . random_int(1, 255) . "." . random_int(1, 255);
+        }
+        $header = array(
+            'CLIENT-IP:' . $ip,
+            'X-FORWARDED-FOR:' . $ip,
+        );
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -277,15 +353,15 @@ class Functions
     {
         $serial = $authenticator->plain_serial();
         $code = $authenticator->code();
+        $serverUrl = Authenticator::getServerFromRegion($authenticator->region());
         switch (strtoupper($authenticator->region())) {
             case "CN":
-                $url = "https://www.battlenet.com.cn/enrollment/pushButton";
+                $url = $serverUrl . "/enrollment/pushButton";
                 $data = "serial={$serial}&code={$code}&application=cn.bma&locale=zh-CN";
                 self::_curlPost($url, $data);
                 break;
-            case "US":
-            case "EU":
-                $url = "https://us.battle.net/enrollment/pushButton";
+            default:
+                $url = $serverUrl . "/enrollment/pushButton";
                 $data = "serial={$serial}&code={$code}&application=bma&locale=zh-CN";
                 self::_curlPost($url, $data);
                 break;

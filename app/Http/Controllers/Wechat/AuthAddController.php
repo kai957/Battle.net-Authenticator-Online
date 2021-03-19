@@ -31,6 +31,7 @@ class AuthAddController extends Controller
         $this->standardRegion[0] = "CN";
         $this->standardRegion[1] = "US";
         $this->standardRegion[2] = "EU";
+        $this->standardRegion[3] = "KR";
     }
 
     private function getCreateErrorView($mode)

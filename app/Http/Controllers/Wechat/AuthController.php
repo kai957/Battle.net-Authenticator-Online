@@ -88,7 +88,7 @@ class AuthController extends Controller
                 return response()->json($jsonError);
             }
         }
-        if (strtoupper($authBean->getAuthRegion()) != "CN" && strtoupper($authBean->getAuthRegion()) != "EU") {
+        if (strtoupper($authBean->getAuthRegion()) != "CN" && strtoupper($authBean->getAuthRegion()) != "EU" && strtoupper($authBean->getAuthRegion()) != "KR") {
             $authBean->setAuthRegion("US");
         }
         $lastSyncTime = $authUtils->getAuthSyncInfo()->getSyncList()[strtoupper($authBean->getAuthRegion())][AuthSyncInfo::LAST_SYNC_TIME];
